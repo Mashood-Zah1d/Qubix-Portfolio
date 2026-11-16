@@ -1,1412 +1,2086 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Qubix — Futuristic Digital Engineering & Voice AI Studio. Web Development, WordPress, Shopify, Social Media Growth, and Autonomous AI Call Agents built in-house.">
-<title>Qubix — Next-Gen Digital Engineering Studio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg-dark: #050811;
-    --bg-surface: #0b0f19;
-    --bg-card: rgba(15, 23, 42, 0.6);
-    --bg-card-hover: rgba(24, 34, 58, 0.85);
-    --border: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(99, 102, 241, 0.35);
-    --border-cyan: rgba(6, 182, 212, 0.4);
-    
-    --text-main: #F8FAFC;
-    --text-muted: #94A3B8;
-    --text-dim: #64748B;
-    
-    --primary: #6366F1;
-    --primary-glow: rgba(99, 102, 241, 0.25);
-    --accent-cyan: #06B6D4;
-    --accent-violet: #8B5CF6;
-    --accent-emerald: #10B981;
-    
-    --font-heading: 'Space Grotesk', -apple-system, sans-serif;
-    --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-    
-    --radius-lg: 18px;
-    --radius-md: 12px;
-    --radius-sm: 8px;
-    --radius-full: 9999px;
-    
-    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050811">
+  <meta name="description" content="Qubix Studio develops custom software, web applications, business dashboards, APIs, and digital solutions using ASP.NET Core, React, Node.js, PostgreSQL, and Azure.">
+  <title>Qubix Studio | Custom Software & Digital Engineering</title>
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  html {
-    scroll-behavior: smooth;
-    background-color: var(--bg-dark);
-  }
-
-  body {
-    background: var(--bg-dark);
-    color: var(--text-main);
-    font-family: var(--font-body);
-    min-height: 100vh;
-    overflow-x: hidden;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  h1, h2, h3, h4, h5 {
-    font-family: var(--font-heading);
-    color: #fff;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
-  .mono {
-    font-family: var(--font-mono);
-  }
-
-  ::selection {
-    background: var(--primary);
-    color: #fff;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  button {
-    font: inherit;
-    color: inherit;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-
-  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-    outline: 2px solid var(--accent-cyan);
-    outline-offset: 3px;
-  }
-
-  /* Background Ambient FX */
-  .bg-fx {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .bg-glow-1 {
-    position: absolute;
-    top: -10%;
-    left: 20%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 70%);
-    filter: blur(80px);
-    border-radius: 50%;
-  }
-  .bg-glow-2 {
-    position: absolute;
-    top: 40%;
-    right: -10%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%);
-    filter: blur(90px);
-    border-radius: 50%;
-  }
-  .grid-pattern {
-    position: absolute;
-    inset: 0;
-    background-image: 
-      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, #000 40%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, #000 40%, transparent 100%);
-  }
-
-  /* Scroll progress bar */
-  .progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    width: 0%;
-    background: linear-gradient(90deg, var(--primary), var(--accent-cyan), var(--accent-violet));
-    z-index: 1100;
-    transition: width 0.1s ease-out;
-  }
-
-  /* Header & Navigation */
-  .q-navbar {
-    position: fixed;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(1140px, calc(100% - 32px));
-    z-index: 1000;
-    background: rgba(11, 15, 25, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-full);
-    padding: 10px 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  }
-  .q-nav-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .q-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .q-logo-symbol {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .q-brand-name {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    font-size: 1.15rem;
-    letter-spacing: -0.01em;
-    color: #fff;
-  }
-  .q-brand-tag {
-    font-size: 0.65rem;
-    padding: 2px 6px;
-    background: rgba(99, 102, 241, 0.15);
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    color: var(--accent-cyan);
-    border-radius: 4px;
-    font-family: var(--font-mono);
-    vertical-align: middle;
-  }
-  .q-nav-links {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
-  .q-nav-link {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    transition: color 0.2s ease, transform 0.2s ease;
-  }
-  .q-nav-link:hover, .q-nav-link.active {
-    color: #fff;
-  }
-  .q-nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .q-status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.72rem;
-    font-family: var(--font-mono);
-    color: var(--accent-emerald);
-    background: rgba(16, 185, 129, 0.08);
-    border: 1px solid rgba(16, 185, 129, 0.25);
-    padding: 4px 10px;
-    border-radius: var(--radius-full);
-  }
-  .q-status-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--accent-emerald);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--accent-emerald);
-  }
-  .q-btn-primary {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(135deg, var(--primary), var(--accent-violet));
-    color: #fff;
-    font-family: var(--font-heading);
-    font-weight: 600;
-    font-size: 0.85rem;
-    padding: 9px 18px;
-    border-radius: var(--radius-full);
-    transition: all 0.25s var(--ease-out);
-    box-shadow: 0 4px 20px var(--primary-glow);
-    border: 1px solid rgba(255,255,255,0.15);
-  }
-  .q-btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
-    border-color: rgba(255,255,255,0.3);
-  }
-  .q-btn-primary:active {
-    transform: translateY(0) scale(0.98);
-  }
-
-  .q-mobile-toggle {
-    display: none;
-    color: var(--text-muted);
-  }
-
-  /* Page Layout Container */
-  .wrap {
-    max-width: 1140px;
-    margin: 0 auto;
-    padding: 130px 24px 80px;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Hero Section */
-  .hero-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
-    margin-bottom: 70px;
-  }
-  .hero-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .eyebrow-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.75rem;
-    font-family: var(--font-mono);
-    color: var(--accent-cyan);
-    background: rgba(6, 182, 212, 0.08);
-    border: 1px solid rgba(6, 182, 212, 0.25);
-    padding: 6px 14px;
-    border-radius: var(--radius-full);
-    margin-bottom: 24px;
-  }
-  .hero-title {
-    font-size: clamp(2.4rem, 4.5vw, 3.6rem);
-    line-height: 1.1;
-    margin-bottom: 20px;
-    font-weight: 700;
-  }
-  .hero-title .accent-text {
-    background: linear-gradient(135deg, #FFFFFF 30%, #A5B4FC 70%, var(--accent-cyan) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .hero-desc {
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    line-height: 1.65;
-    margin-bottom: 32px;
-    max-width: 520px;
-  }
-  .hero-cta-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .q-btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border);
-    color: #fff;
-    font-family: var(--font-heading);
-    font-weight: 600;
-    font-size: 0.88rem;
-    padding: 12px 24px;
-    border-radius: var(--radius-full);
-    transition: all 0.25s var(--ease-out);
-  }
-  .q-btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--border-hover);
-    transform: translateY(-2px);
-  }
-
-  /* Hero Visual Card / HUD Interactive Element */
-  .hero-visual {
-    position: relative;
-  }
-  .hud-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-    position: relative;
-    overflow: hidden;
-  }
-  .hud-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.6), transparent);
-  }
-  .hud-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 20px;
-  }
-  .hud-title {
-    font-size: 0.8rem;
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .hud-dots {
-    display: flex;
-    gap: 6px;
-  }
-  .hud-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-  }
-  .hud-dot.red { background: #FF5F56; }
-  .hud-dot.yellow { background: #FFBD2E; }
-  .hud-dot.green { background: #27C93F; }
-
-  /* Interactive Terminal console in Hero */
-  .terminal-box {
-    background: rgba(5, 8, 17, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: var(--radius-md);
-    padding: 16px;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: #A5B4FC;
-    line-height: 1.7;
-    min-height: 140px;
-  }
-  .term-line {
-    display: flex;
-    gap: 8px;
-  }
-  .term-cmd { color: var(--accent-cyan); }
-  .term-val { color: #10B981; }
-  .term-cursor {
-    display: inline-block;
-    width: 7px;
-    height: 14px;
-    background: var(--accent-cyan);
-    margin-left: 2px;
-    vertical-align: middle;
-    animation: termBlink 1s infinite;
-  }
-  @keyframes termBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-  .hud-metrics {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: 20px;
-  }
-  .metric-item {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 12px;
-    text-align: center;
-  }
-  .metric-num {
-    font-family: var(--font-heading);
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #fff;
-  }
-  .metric-label {
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  /* Section Header */
-  .section-head {
-    text-align: center;
-    max-width: 640px;
-    margin: 0 auto 50px;
-  }
-  .section-tag {
-    font-size: 0.75rem;
-    font-family: var(--font-mono);
-    color: var(--accent-cyan);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    display: inline-block;
-  }
-  .section-title {
-    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-    margin-bottom: 14px;
-  }
-  .section-sub {
-    color: var(--text-muted);
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-
-  /* Service Grid */
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-    contain: layout style;
-  }
-
-  .module-card {
-    position: relative;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    background: var(--bg-card);
-    padding: 28px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    transition: all 0.3s var(--ease-out);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-  }
-  .module-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: var(--radius-lg);
-    padding: 1px;
-    background: linear-gradient(135deg, transparent, rgba(99, 102, 241, 0.2), transparent);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  .module-card:hover {
-    border-color: var(--border-hover);
-    background: var(--bg-card-hover);
-    transform: translateY(-4px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-  }
-  .module-card:hover::before {
-    opacity: 1;
-  }
-
-  .card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  .mod-badge {
-    font-size: 0.7rem;
-    font-family: var(--font-mono);
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-  }
-  .status-tag {
-    font-size: 0.65rem;
-    font-family: var(--font-mono);
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 4px;
-    letter-spacing: 0.5px;
-  }
-  .status-tag.live {
-    color: var(--accent-emerald);
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-  }
-  .status-tag.soon {
-    color: var(--text-dim);
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border);
-  }
-
-  .card-main {
-    margin-bottom: 24px;
-  }
-  .icon-wrapper {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-md);
-    background: rgba(99, 102, 241, 0.1);
-    border: 1px solid rgba(99, 102, 241, 0.25);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent-cyan);
-    margin-bottom: 16px;
-    transition: transform 0.3s ease;
-  }
-  .module-card:hover .icon-wrapper {
-    transform: scale(1.05);
-    border-color: var(--accent-cyan);
-  }
-  .icon-wrapper.muted {
-    background: rgba(255, 255, 255, 0.02);
-    border-color: var(--border);
-    color: var(--text-dim);
-  }
-  .card-title {
-    font-size: 1.25rem;
-    margin-bottom: 8px;
-  }
-  .card-desc {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  .card-action {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--primary);
-    transition: all 0.2s ease;
-  }
-  .card-action svg {
-    width: 14px;
-    height: 14px;
-    transition: transform 0.2s ease;
-  }
-  .module-card:hover .card-action {
-    color: var(--accent-cyan);
-  }
-  .module-card:hover .card-action svg {
-    transform: translateX(4px);
-  }
-
-  /* Capabilities Showcase Matrix */
-  .capabilities-section {
-    margin-top: 90px;
-    background: rgba(11, 15, 25, 0.6);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 40px clamp(20px, 4vw, 48px);
-    backdrop-filter: blur(12px);
-  }
-  .cap-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 24px;
-    margin-top: 32px;
-  }
-  .cap-item {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 24px;
-  }
-  .cap-icon {
-    color: var(--accent-cyan);
-    margin-bottom: 14px;
-  }
-  .cap-title {
-    font-size: 1.05rem;
-    margin-bottom: 6px;
-  }
-  .cap-desc {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
-
-  /* Footer */
-  footer {
-    margin-top: 80px;
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  .footer-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .footer-sub {
-    font-size: 0.78rem;
-    color: var(--text-dim);
-    font-family: var(--font-mono);
-  }
-  .socials {
-    display: flex;
-    gap: 10px;
-  }
-  .social-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.02);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    transition: all 0.2s ease;
-  }
-  .social-btn:hover {
-    border-color: var(--accent-cyan);
-    color: #fff;
-    transform: translateY(-2px);
-  }
-
-  /* Universal Quote Modal */
-  .q-modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    background: rgba(3, 5, 12, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
-  }
-  .q-modal-overlay.open {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.25s ease, visibility 0s linear 0s;
-  }
-  .q-modal-panel {
-    position: relative;
-    width: 100%;
-    max-width: 500px;
-    background: #0d121f;
-    border: 1px solid var(--border-hover);
-    border-radius: var(--radius-lg);
-    padding: 36px 30px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
-    transform: translateY(15px);
-    transition: transform 0.3s var(--ease-out);
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  .q-modal-overlay.open .q-modal-panel {
-    transform: translateY(0);
-  }
-  .q-modal-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    transition: all 0.2s ease;
-  }
-  .q-modal-close:hover {
-    border-color: #fff;
-    color: #fff;
-  }
-  .modal-head-pill {
-    font-size: 0.7rem;
-    font-family: var(--font-mono);
-    color: var(--accent-cyan);
-    margin-bottom: 8px;
-    display: block;
-  }
-  .modal-title {
-    font-size: 1.6rem;
-    margin-bottom: 8px;
-  }
-  .modal-sub {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-bottom: 24px;
-  }
-  .form-group {
-    margin-bottom: 18px;
-  }
-  .form-group label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .form-control {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: #fff;
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    padding: 12px 14px;
-    transition: all 0.2s ease;
-  }
-  .form-control:focus {
-    outline: none;
-    border-color: var(--accent-cyan);
-    background: rgba(6, 182, 212, 0.04);
-  }
-  .form-control.error {
-    border-color: #EF4444;
-  }
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-  .form-submit-btn {
-    width: 100%;
-    margin-top: 10px;
-    background: linear-gradient(135deg, var(--primary), var(--accent-violet));
-    color: #fff;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 0.95rem;
-    padding: 14px;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 20px var(--primary-glow);
-  }
-  .form-submit-btn:hover:not(:disabled) {
-    opacity: 0.92;
-    transform: translateY(-1px);
-  }
-
-  /* Toast Notification */
-  .toast-container {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 2500;
-    pointer-events: none;
-  }
-  .toast-msg {
-    background: #0f172a;
-    border: 1px solid var(--accent-cyan);
-    border-left: 4px solid var(--accent-emerald);
-    padding: 14px 20px;
-    border-radius: var(--radius-sm);
-    color: #fff;
-    font-size: 0.88rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    pointer-events: auto;
-    transform: translateY(20px);
-    opacity: 0;
-    transition: all 0.3s var(--ease-out);
-  }
-  .toast-msg.show {
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  /* Responsive Adjustments */
-  @media (max-width: 900px) {
-    .hero-section {
-      grid-template-columns: 1fr;
-      margin-bottom: 50px;
+  <style>
+    :root {
+      --bg-dark: #050811;
+      --bg-surface: #0b0f19;
+      --bg-card: rgba(15, 23, 42, .65);
+      --bg-hover: rgba(24, 34, 58, .85);
+      --border: rgba(255, 255, 255, .09);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --dim: #64748b;
+      --primary: #6366f1;
+      --cyan: #06b6d4;
+      --violet: #8b5cf6;
+      --green: #10b981;
+      --heading: 'Space Grotesk', sans-serif;
+      --body: 'Plus Jakarta Sans', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+      --radius: 18px;
     }
-    .q-nav-links {
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg-dark);
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text);
+      font-family: var(--body);
+      line-height: 1.65;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--heading);
+      letter-spacing: -.035em;
+      line-height: 1.2;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 4px;
+    }
+
+    ::selection {
+      background: var(--primary);
+      color: white;
+    }
+
+    .mono {
+      font-family: var(--mono);
+    }
+
+    .container {
+      width: min(1140px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .section {
+      padding: 95px 0;
+      position: relative;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .gradient-text {
+      background: linear-gradient(120deg, #a5b4fc, #67e8f9, #c4b5fd);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .bg-fx {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .glow-one {
+      position: absolute;
+      width: 650px;
+      height: 650px;
+      left: 10%;
+      top: -260px;
+      background: radial-gradient(circle, rgba(99,102,241,.16), transparent 70%);
+      filter: blur(65px);
+    }
+
+    .glow-two {
+      position: absolute;
+      width: 550px;
+      height: 550px;
+      right: -220px;
+      top: 40%;
+      background: radial-gradient(circle, rgba(6,182,212,.12), transparent 70%);
+      filter: blur(75px);
+    }
+
+    .grid-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      z-index: 2000;
+      background: linear-gradient(90deg, var(--primary), var(--cyan), var(--violet));
+    }
+
+    /* Navigation */
+
+    .navbar {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1140px, calc(100% - 32px));
+      padding: 11px 18px;
+      z-index: 1000;
+      background: rgba(11,15,25,.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: 0 12px 35px rgba(0,0,0,.3);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .brand-symbol {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, var(--primary), var(--cyan));
+      color: white;
+      font-family: var(--heading);
+      font-size: 22px;
+      font-weight: 700;
+      box-shadow: 0 0 22px rgba(99,102,241,.3);
+    }
+
+    .brand-name {
+      font-family: var(--heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .brand-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--cyan);
+      border: 1px solid rgba(6,182,212,.25);
+      background: rgba(6,182,212,.07);
+      padding: 3px 6px;
+      border-radius: 5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 21px;
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      transition: color .2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: white;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #6ee7b7;
+      font-family: var(--mono);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 23px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-family: var(--heading);
+      font-weight: 600;
+      font-size: 13px;
+      transition: transform .25s, box-shadow .25s;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--violet));
+      border-color: rgba(255,255,255,.12);
+      box-shadow: 0 5px 25px rgba(99,102,241,.25);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 9px 35px rgba(99,102,241,.4);
+    }
+
+    .btn-outline {
+      color: white;
+      border-color: rgba(255,255,255,.16);
+      background: rgba(255,255,255,.035);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--cyan);
+    }
+
+    .nav-cta {
+      padding: 10px 18px;
+      font-size: 12px;
+    }
+
+    .menu-toggle {
       display: none;
+      background: transparent;
+      color: white;
+      border: 0;
+      font-size: 24px;
+      padding: 5px;
     }
-    .q-nav-links.mobile-open {
+
+    /* Hero */
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 790px;
+      display: flex;
+      align-items: center;
+      padding: 175px 0 100px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 55px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 14px;
+      border: 1px solid rgba(99,102,241,.3);
+      border-radius: 999px;
+      background: rgba(99,102,241,.09);
+      color: #a5b4fc;
+      font-family: var(--mono);
+      font-size: 11px;
+      margin-bottom: 25px;
+    }
+
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.9rem, 5.4vw, 5.1rem);
+      line-height: 1.08;
+      max-width: 740px;
+      margin-bottom: 25px;
+    }
+
+    .hero-description {
+      max-width: 600px;
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-bottom: 35px;
+    }
+
+    .hero-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .tech-chip {
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(255,255,255,.035);
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .hero-visual {
+      position: relative;
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .visual-card {
+      position: relative;
+      padding: 25px;
+      background: linear-gradient(145deg, rgba(19,27,49,.95), rgba(9,14,27,.95));
+      border: 1px solid rgba(99,102,241,.24);
+      border-radius: 24px;
+      box-shadow: 0 35px 90px rgba(0,0,0,.45);
+      overflow: hidden;
+    }
+
+    .visual-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(99,102,241,.13), transparent 60%);
+      pointer-events: none;
+    }
+
+    .window-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 22px;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .window-dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #475569;
+    }
+
+    .window-dots span:first-child { background: #fb7185; }
+    .window-dots span:nth-child(2) { background: #fbbf24; }
+    .window-dots span:nth-child(3) { background: #34d399; }
+
+    .window-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--dim);
+    }
+
+    .code-line {
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 2;
+      color: #cbd5e1;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .code-purple { color: #c4b5fd; }
+    .code-cyan { color: #67e8f9; }
+    .code-green { color: #86efac; }
+    .code-muted { color: #64748b; }
+
+    .visual-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    .visual-bottom {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .mini-card {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.025);
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .mini-label {
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 10px;
+      margin-bottom: 8px;
+    }
+
+    .mini-value {
+      font-family: var(--heading);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .mini-value.green {
+      color: #6ee7b7;
+    }
+
+    /* Section headings */
+
+    .section-heading {
+      text-align: center;
+      max-width: 740px;
+      margin: 0 auto 48px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 1.4px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      margin-bottom: 16px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* Services */
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .service-card {
+      position: relative;
+      padding: 29px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: transform .3s, border-color .3s, background .3s;
       display: flex;
       flex-direction: column;
-      position: absolute;
-      top: 60px;
-      left: 0;
-      right: 0;
-      background: #0b0f19;
+      min-height: 290px;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      background: var(--bg-hover);
+      border-color: rgba(99,102,241,.35);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: rgba(99,102,241,.12);
+      border: 1px solid rgba(99,102,241,.2);
+      font-size: 22px;
+      margin-bottom: 22px;
+    }
+
+    .service-card h3 {
+      font-size: 19px;
+      margin-bottom: 12px;
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: 13px;
+      flex: 1;
+    }
+
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 22px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #a5b4fc;
+      font-weight: 600;
+    }
+
+    .service-link:hover {
+      color: var(--cyan);
+    }
+
+    /* About */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-panel {
+      background: linear-gradient(145deg, rgba(99,102,241,.12), rgba(6,182,212,.045));
+      border: 1px solid rgba(99,102,241,.22);
+      padding: 35px;
+      border-radius: 24px;
+    }
+
+    .about-avatar {
+      width: 80px;
+      height: 80px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      font-family: var(--heading);
+      font-weight: 700;
+      font-size: 28px;
+      background: linear-gradient(135deg, var(--primary), var(--violet));
+      margin-bottom: 25px;
+    }
+
+    .about-panel h3 {
+      font-size: 25px;
+      margin-bottom: 7px;
+    }
+
+    .about-role {
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-size: 11px;
+      margin-bottom: 20px;
+    }
+
+    .about-panel p,
+    .about-content p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .about-content h2 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      margin-bottom: 23px;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    /* Projects */
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .project-card {
+      overflow: hidden;
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius-md);
+      border-radius: 20px;
+      transition: transform .3s, border-color .3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(6,182,212,.35);
+    }
+
+    .project-preview {
+      min-height: 230px;
+      padding: 24px;
+      background: linear-gradient(145deg, #121a30, #080e1c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-preview::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(99,102,241,.17), transparent 70%);
+      right: -100px;
+      top: -120px;
+    }
+
+    .preview-window {
+      width: 100%;
+      max-width: 390px;
       padding: 20px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: #0b1222;
+      box-shadow: 0 20px 50px rgba(0,0,0,.3);
+      z-index: 1;
+    }
+
+    .preview-title {
+      font-family: var(--heading);
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .preview-bars {
+      display: grid;
+      gap: 9px;
+    }
+
+    .preview-bar {
+      height: 9px;
+      background: rgba(99,102,241,.22);
+      border-radius: 5px;
+    }
+
+    .preview-bar:nth-child(2) {
+      width: 72%;
+      background: rgba(6,182,212,.24);
+    }
+
+    .preview-bar:nth-child(3) {
+      width: 85%;
+    }
+
+    .preview-bar:nth-child(4) {
+      width: 53%;
+      background: rgba(139,92,246,.3);
+    }
+
+    .project-content {
+      padding: 26px;
+    }
+
+    .project-type {
+      font-family: var(--mono);
+      color: var(--cyan);
+      font-size: 10px;
+      margin-bottom: 10px;
+    }
+
+    .project-content h3 {
+      font-size: 21px;
+      margin-bottom: 11px;
+    }
+
+    .project-content p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 17px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Process */
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .process-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      padding: 25px;
+    }
+
+    .process-number {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--cyan);
+      margin-bottom: 20px;
+    }
+
+    .process-card h3 {
+      font-size: 17px;
+      margin-bottom: 12px;
+    }
+
+    .process-card p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Contact */
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 50px;
+      align-items: start;
+    }
+
+    .contact-info h2 {
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      margin-bottom: 20px;
+    }
+
+    .contact-info p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    .contact-point {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 17px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .contact-point span:first-child {
+      width: 35px;
+      height: 35px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg-card);
+    }
+
+    .contact-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 30px;
+      border-radius: 22px;
+    }
+
+    .form-title {
+      font-size: 21px;
+      margin-bottom: 9px;
+    }
+
+    .form-description {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 25px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
-    .q-mobile-toggle {
-      display: block;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 17px;
     }
-  }
-  @media (max-width: 600px) {
-    .form-row { grid-template-columns: 1fr; }
-    .hud-metrics { grid-template-columns: 1fr; }
-    .wrap { padding-top: 100px; }
-  }
-</style>
+
+    .form-group label {
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(5,8,17,.75);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 11px;
+      padding: 13px 14px;
+      color: white;
+      outline: none;
+      font-size: 13px;
+      transition: border-color .2s;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+
+    .form-control::placeholder {
+      color: #64748b;
+    }
+
+    select.form-control {
+      color-scheme: dark;
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-submit {
+      width: 100%;
+      border: none;
+      margin-top: 6px;
+    }
+
+    .form-submit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .form-note {
+      margin-top: 15px;
+      font-size: 11px;
+      color: var(--dim);
+      text-align: center;
+    }
+
+    .form-status {
+      margin-top: 15px;
+      font-size: 12px;
+      min-height: 20px;
+    }
+
+    .form-status.success {
+      color: #6ee7b7;
+    }
+
+    .form-status.error {
+      color: #fb7185;
+    }
+
+    .contact-email {
+      color: #a5b4fc;
+      overflow-wrap: anywhere;
+    }
+
+    /* Footer */
+
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      background: rgba(5,8,17,.7);
+      padding: 35px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-copy {
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 10px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-links a:hover {
+      color: var(--cyan);
+    }
+
+    /* Animations */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Responsive */
+
+    @media (max-width: 1100px) {
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: 11px; }
+      .status { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .about-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero { padding-top: 155px; }
+
+      .hero-visual {
+        max-width: 600px;
+        margin: auto;
+        width: 100%;
+      }
+
+      .services-grid,
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .menu-toggle { display: block; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 74px;
+        left: 0;
+        width: 100%;
+        padding: 22px;
+        background: #0b0f19;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+        box-shadow: 0 25px 60px rgba(0,0,0,.5);
+      }
+
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 14px; }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: min(100% - 30px, 1140px);
+      }
+
+      .section {
+        padding: 65px 0;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 145px 0 70px;
+      }
+
+      .hero h1 { font-size: 2.8rem; }
+      .hero-description { font-size: 14px; }
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn { width: 100%; }
+
+      .services-grid,
+      .projects-grid,
+      .process-grid,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-cta { display: none; }
+
+      .visual-card,
+      .contact-form,
+      .about-panel {
+        padding: 21px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="progress" id="progressBar"></div>
-<div class="toast-container" id="toastContainer"></div>
-
-<div class="bg-fx">
-  <div class="bg-glow-1"></div>
-  <div class="bg-glow-2"></div>
-  <div class="grid-pattern"></div>
-</div>
-
-<!-- GLOBAL QUBIX NAVBAR -->
-<header class="q-navbar">
-  <div class="q-nav-container">
-    <a href="index.html" class="q-brand">
-      <div class="q-logo-symbol">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 2L2 9V23L16 30L30 23V9L16 2Z" stroke="url(#logo-grad)" stroke-width="2.5" stroke-linejoin="round"/>
-          <path d="M16 8L8 12V20L16 24L24 20V12L16 8Z" fill="url(#logo-grad-inner)" opacity="0.4"/>
-          <circle cx="16" cy="16" r="3" fill="#06B6D4"/>
-          <defs>
-            <linearGradient id="logo-grad" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#6366F1"/>
-              <stop offset="0.5" stop-color="#8B5CF6"/>
-              <stop offset="1" stop-color="#06B6D4"/>
-            </linearGradient>
-            <linearGradient id="logo-grad-inner" x1="8" y1="8" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#6366F1"/>
-              <stop offset="1" stop-color="#06B6D4"/>
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-      <span class="q-brand-name">QUBIX <span class="q-brand-tag">STUDIO</span></span>
-    </a>
-
-    <nav class="q-nav-links" id="qNavLinks">
-      <a href="index.html" class="q-nav-link active">Overview</a>
-      <a href="WebDevelopment.html" class="q-nav-link">Web Dev</a>
-      <a href="Wordpress.html" class="q-nav-link">WordPress</a>
-      <a href="Shopify.html" class="q-nav-link">Shopify</a>
-      <a href="SocialMedia.html" class="q-nav-link">Social Growth</a>
-      <a href="CallAgent.html" class="q-nav-link">AI Call Agent</a>
-    </nav>
-
-    <div class="q-nav-actions">
-      <div class="q-status-badge">
-        <span class="q-status-dot"></span>
-        <span>v2.6 ENGINE</span>
-      </div>
-      <button type="button" class="q-btn-primary" data-open-quote>
-        <span>Launch Project</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-      <button class="q-mobile-toggle" aria-label="Toggle Navigation" id="mobileToggleBtn">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-    </div>
+  <div class="bg-fx" aria-hidden="true">
+    <div class="glow-one"></div>
+    <div class="glow-two"></div>
+    <div class="grid-pattern"></div>
   </div>
-</header>
 
-<div class="wrap">
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="hero-content">
-      <div class="eyebrow-pill">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-        <span>AUTONOMOUS DIGITAL ENGINEERING &amp; AI SYSTEMS</span>
+  <div class="progress" id="progressBar"></div>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <nav class="nav-inner" aria-label="Main navigation">
+
+      <a href="index.html" class="brand">
+        <span class="brand-symbol">Q</span>
+        <span class="brand-name">Qubix</span>
+        <span class="brand-tag">STUDIO</span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" class="active">Overview</a>
+        <a href="WebDevelopment.html">Web Dev</a>
+        <a href="Wordpress.html">WordPress</a>
+        <a href="Shopify.html">Shopify</a>
+        <a href="SocialMedia.html">Social Media</a>
+        <a href="CallAgent.html">AI Agents</a>
+        <a href="#projects">Projects</a>
       </div>
-      <h1 class="hero-title">
-        High-performance code &amp; <span class="accent-text">intelligent AI web products.</span>
-      </h1>
-      <p class="hero-desc">
-        Qubix builds custom web applications, high-converting e-commerce engines, growth strategies, and voice AI agents. Built in-house for visionary clients.
-      </p>
-      <div class="hero-cta-group">
-        <button type="button" class="q-btn-primary" data-open-quote style="padding: 13px 28px; font-size: 0.95rem;">
-          <span>Request Custom Scope</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-        <a href="#services" class="q-btn-secondary">
-          <span>Explore Modules</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+
+      <div class="nav-actions">
+        <span class="status">
+          <span class="status-dot"></span>
+          PROJECT INQUIRIES
+        </span>
+
+        <a href="#contact" class="btn btn-primary nav-cta">
+          Let's Talk ↗
         </a>
-      </div>
-    </div>
 
-    <!-- Hero Visual Interactive HUD -->
-    <div class="hero-visual">
-      <div class="hud-card">
-        <div class="hud-header">
-          <div class="hud-title">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 14 15 20 9"/><polyline points="14 9 20 9 20 15"/></svg>
-            <span>QUBIX_SYSTEM_TERMINAL</span>
-          </div>
-          <div class="hud-dots">
-            <span class="hud-dot red"></span>
-            <span class="hud-dot yellow"></span>
-            <span class="hud-dot green"></span>
-          </div>
-        </div>
-
-        <div class="terminal-box" id="termConsole">
-          <div class="term-line"><span class="term-cmd">qubix@engine:~$</span> initialize --services</div>
-          <div class="term-line"><span class="term-val">[OK]</span> Core architecture online</div>
-          <div class="term-line"><span class="term-val">[OK]</span> 5 Production Modules Live</div>
-          <div class="term-line"><span class="term-cmd">qubix@engine:~$</span> status --performance</div>
-          <div class="term-line"><span class="term-val">[100%]</span> Zero-bloat code verified<span class="term-cursor"></span></div>
-        </div>
-
-        <div class="hud-metrics">
-          <div class="metric-item">
-            <div class="metric-num">5 Live</div>
-            <div class="metric-label">Active Modules</div>
-          </div>
-          <div class="metric-item">
-            <div class="metric-num">99.9%</div>
-            <div class="metric-label">Uptime Stack</div>
-          </div>
-          <div class="metric-item">
-            <div class="metric-num">&lt; 0.2s</div>
-            <div class="metric-label">Load Target</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Service Modules Grid Section -->
-  <section id="services">
-    <div class="section-head">
-      <span class="section-tag">ENGINEERING MODULES</span>
-      <h2 class="section-title">Full-stack digital solutions.</h2>
-      <p class="section-sub">Modular engineering services tailored for scalability, conversion, and automation.</p>
-    </div>
-
-    <div class="grid-container" id="grid">
-      
-      <!-- Module 1 -->
-      <div class="module-card">
-        <div class="card-top">
-          <span class="mod-badge">MOD.01</span>
-          <span class="status-tag live">LIVE</span>
-        </div>
-        <div class="card-main">
-          <div class="icon-wrapper">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><circle cx="6.5" cy="6.5" r=".6" fill="currentColor"/><circle cx="9" cy="6.5" r=".6" fill="currentColor"/></svg>
-          </div>
-          <h3 class="card-title">Web Development</h3>
-          <p class="card-desc">Custom high-performance web applications — zero bloat, custom APIs, and instant page loads.</p>
-        </div>
-        <a href="WebDevelopment.html" class="card-action">
-          <span>Explore Architecture</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="navLinks"
+          type="button"
+        >☰</button>
       </div>
 
-      <!-- Module 2 -->
-      <div class="module-card">
-        <div class="card-top">
-          <span class="mod-badge">MOD.02</span>
-          <span class="status-tag live">LIVE</span>
-        </div>
-        <div class="card-main">
-          <div class="icon-wrapper">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M4 11l4 8M9 4l4 14 3-9M18 6l-3 12"/></svg>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+
+        <div class="hero-content reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            SOFTWARE ENGINEERING & DIGITAL SOLUTIONS
           </div>
-          <h3 class="card-title">WordPress Engine</h3>
-          <p class="card-desc">Headless &amp; custom Gutenberg themes engineered for extreme speed and effortless content editing.</p>
-        </div>
-        <a href="Wordpress.html" class="card-action">
-          <span>Explore CMS Builds</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
 
-      <!-- Module 3 -->
-      <div class="module-card">
-        <div class="card-top">
-          <span class="mod-badge">MOD.03</span>
-          <span class="status-tag live">LIVE</span>
-        </div>
-        <div class="card-main">
-          <div class="icon-wrapper">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 4 6v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6l-2-4"/><path d="M4 6h16"/><path d="M10 10a2 2 0 0 0 4 0"/></svg>
+          <h1>
+            Building Software
+            That Moves
+            <span class="gradient-text">
+              Businesses Forward.
+            </span>
+          </h1>
+
+          <p class="hero-description">
+            Qubix Studio develops custom web applications,
+            business management systems, dashboards,
+            APIs, and digital experiences.
+            We turn complex business requirements into
+            practical, maintainable software solutions.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">
+              Discuss Your Project ↗
+            </a>
+
+            <a href="#projects" class="btn btn-outline">
+              Explore Our Work ↓
+            </a>
           </div>
-          <h3 class="card-title">Shopify Storefronts</h3>
-          <p class="card-desc">eCommerce platforms optimized for conversion rate, custom Liquid code, and seamless checkout.</p>
-        </div>
-        <a href="Shopify.html" class="card-action">
-          <span>Explore E-Commerce</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
 
-      <!-- Module 4 -->
-      <div class="module-card">
-        <div class="card-top">
-          <span class="mod-badge">MOD.04</span>
-          <span class="status-tag live">LIVE</span>
-        </div>
-        <div class="card-main">
-          <div class="icon-wrapper">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2v6l-3-2-3 2V2"/><rect x="3" y="8" width="18" height="14" rx="2"/></svg>
+          <div class="hero-tech">
+            <span class="tech-chip">ASP.NET Core</span>
+            <span class="tech-chip">React.js</span>
+            <span class="tech-chip">Node.js</span>
+            <span class="tech-chip">PostgreSQL</span>
+            <span class="tech-chip">Docker</span>
+            <span class="tech-chip">Microsoft Azure</span>
           </div>
-          <h3 class="card-title">Social Growth Studio</h3>
-          <p class="card-desc">Data-driven content strategies, viral storytelling, and paid funnel automation that turn viewers into revenue.</p>
         </div>
-        <a href="SocialMedia.html" class="card-action">
-          <span>Explore Strategy</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
 
-      <!-- Module 5 -->
-      <div class="module-card">
-        <div class="card-top">
-          <span class="mod-badge">MOD.05</span>
-          <span class="status-tag live">LIVE</span>
-        </div>
-        <div class="card-main">
-          <div class="icon-wrapper">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <div class="hero-visual">
+          <div class="visual-card">
+
+            <div class="window-header">
+              <div class="window-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="window-label">qubix / engineering</span>
+            </div>
+
+            <div class="code-line">
+              <span class="code-purple">public class</span>
+              <span class="code-cyan"> BusinessSolution</span>
+            </div>
+
+            <div class="code-line">{</div>
+
+            <div class="code-line">
+              &nbsp;&nbsp;<span class="code-purple">public string</span>
+              Goal =&gt;
+              <span class="code-green">"Solve real problems"</span>;
+            </div>
+
+            <div class="code-line">
+              &nbsp;&nbsp;<span class="code-purple">public string[]</span>
+              Stack =&gt;
+            </div>
+
+            <div class="code-line">
+              &nbsp;&nbsp;[
+              <span class="code-green">".NET"</span>,
+              <span class="code-green">"React"</span>,
+              <span class="code-green">"Azure"</span>
+              ];
+            </div>
+
+            <div class="code-line">
+              &nbsp;&nbsp;<span class="code-muted">// Design. Build. Improve.</span>
+            </div>
+
+            <div class="code-line">}</div>
+
+            <div class="visual-divider"></div>
+
+            <div class="visual-bottom">
+              <div class="mini-card">
+                <div class="mini-label">DEVELOPMENT</div>
+                <div class="mini-value">Full Stack</div>
+              </div>
+
+              <div class="mini-card">
+                <div class="mini-label">APPROACH</div>
+                <div class="mini-value green">Solution First</div>
+              </div>
+            </div>
+
           </div>
-          <h3 class="card-title">AI Voice Call Agent</h3>
-          <p class="card-desc">Autonomous voice bots built on n8n &amp; LLMs. Answers, qualifies, and books meetings 24/7 without delays.</p>
         </div>
-        <a href="CallAgent.html" class="card-action">
-          <span>Test Voice AI</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
 
-      <!-- Module 6 -->
-      <div class="module-card">
-        <div class="card-top">
-          <span class="mod-badge">MOD.06</span>
-          <span class="status-tag soon">UPCOMING</span>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section" id="services">
+      <div class="container">
+
+        <div class="section-heading reveal">
+          <span class="section-label">What We Build</span>
+          <h2>
+            Engineering Meets
+            <span class="gradient-text">Business Value.</span>
+          </h2>
+          <p>
+            From custom software to digital storefronts,
+            Qubix Studio helps businesses build practical
+            technology solutions.
+          </p>
         </div>
-        <div class="card-main">
-          <div class="icon-wrapper muted">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-11.9 7.8L4 21l1.7-5.1A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+
+        <div class="services-grid">
+
+          <article class="service-card reveal">
+            <div class="service-icon">⌘</div>
+            <h3>Custom Web Development</h3>
+            <p>
+              Responsive web applications, business portals,
+              React frontends, ASP.NET Core APIs, and
+              custom backend integrations.
+            </p>
+            <a href="WebDevelopment.html" class="service-link">
+              Explore Service →
+            </a>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">▦</div>
+            <h3>Business Software</h3>
+            <p>
+              Custom CRM modules, internal dashboards,
+              workflow management, reporting tools,
+              and database-driven business applications.
+            </p>
+            <a href="#contact" class="service-link">
+              Discuss a Solution →
+            </a>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">☁</div>
+            <h3>API & Cloud Solutions</h3>
+            <p>
+              REST API development, third-party integrations,
+              Docker-based deployments, and Azure-oriented
+              application architecture.
+            </p>
+            <a href="#contact" class="service-link">
+              Request Consultation →
+            </a>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">◈</div>
+            <h3>WordPress Solutions</h3>
+            <p>
+              Business websites, content management,
+              WordPress customization, and WooCommerce
+              development based on project requirements.
+            </p>
+            <a href="Wordpress.html" class="service-link">
+              Explore Service →
+            </a>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">▣</div>
+            <h3>Shopify E-commerce</h3>
+            <p>
+              Shopify storefront development,
+              theme customization, product presentation,
+              and e-commerce user experience improvements.
+            </p>
+            <a href="Shopify.html" class="service-link">
+              Explore Service →
+            </a>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">✧</div>
+            <h3>AI & Digital Automation</h3>
+            <p>
+              Workflow automation, AI-assisted solutions,
+              business process integrations, and
+              digital marketing support.
+            </p>
+            <a href="CallAgent.html" class="service-link">
+              Explore AI Solutions →
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="about">
+      <div class="container about-grid">
+
+        <div class="about-panel reveal">
+          <div class="about-avatar">MZ</div>
+          <h3>Mashood Zahid</h3>
+          <div class="about-role">
+            SOFTWARE DEVELOPER · QUBIX STUDIO
           </div>
-          <h3 class="card-title">Custom Chatbots</h3>
-          <p class="card-desc">Brand-trained RAG chatbots integrated into custom support and sales funnels.</p>
-        </div>
-        <span class="card-action" style="color: var(--text-dim);">In Development</span>
-      </div>
 
-      <!-- Module 7 -->
-      <div class="module-card">
-        <div class="card-top">
-          <span class="mod-badge">MOD.07</span>
-          <span class="status-tag soon">UPCOMING</span>
+          <p>
+            Software developer focused on building
+            modern web applications, APIs,
+            database-driven systems, and
+            business-focused digital solutions.
+          </p>
+
+          <p>
+            Practical experience with ASP.NET Core,
+            React, Node.js, PostgreSQL,
+            Docker, and Microsoft Azure.
+          </p>
+
+          <a
+            href="https://github.com/Mashood-Zah1d"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
+            View GitHub ↗
+          </a>
         </div>
-        <div class="card-main">
-          <div class="icon-wrapper muted">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="7" y1="18" x2="17" y2="18"/></svg>
+
+        <div class="about-content reveal">
+          <span class="section-label">About Qubix Studio</span>
+
+          <h2>
+            Real Engineering.
+            <span class="gradient-text">
+              Practical Solutions.
+            </span>
+          </h2>
+
+          <p>
+            Qubix Studio is a software and digital
+            solutions brand focused on helping
+            businesses turn ideas into functional
+            technology products.
+          </p>
+
+          <p>
+            Our development approach emphasizes
+            clear requirements, maintainable code,
+            reliable integrations, and solutions
+            that address actual operational needs.
+          </p>
+
+          <p>
+            We work with businesses in Pakistan
+            and welcome remote project inquiries
+            from international clients.
+          </p>
+
+          <div class="skill-list">
+            <span class="tech-chip">C#</span>
+            <span class="tech-chip">ASP.NET Core</span>
+            <span class="tech-chip">Entity Framework Core</span>
+            <span class="tech-chip">JavaScript</span>
+            <span class="tech-chip">React</span>
+            <span class="tech-chip">Node.js</span>
+            <span class="tech-chip">Express</span>
+            <span class="tech-chip">PostgreSQL</span>
+            <span class="tech-chip">REST APIs</span>
+            <span class="tech-chip">Docker</span>
+            <span class="tech-chip">Azure</span>
+            <span class="tech-chip">Git</span>
           </div>
-          <h3 class="card-title">Cross-Platform Apps</h3>
-          <p class="card-desc">Native iOS and Android mobile experiences engineered with React Native and Flutter.</p>
         </div>
-        <span class="card-action" style="color: var(--text-dim);">In Development</span>
-      </div>
 
-      <!-- Module 8 -->
-      <div class="module-card">
-        <div class="card-top">
-          <span class="mod-badge">MOD.08</span>
-          <span class="status-tag soon">UPCOMING</span>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section" id="projects">
+      <div class="container">
+
+        <div class="section-heading reveal">
+          <span class="section-label">Selected Work</span>
+          <h2>
+            Projects &
+            <span class="gradient-text">Engineering Work.</span>
+          </h2>
+          <p>
+            A look at software development,
+            interface design, and ongoing
+            engineering projects.
+          </p>
         </div>
-        <div class="card-main">
-          <div class="icon-wrapper muted">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+
+        <div class="projects-grid">
+
+          <article class="project-card reveal">
+            <div class="project-preview">
+              <div class="preview-window">
+                <div class="preview-title">
+                  EquityLens / FinTech
+                </div>
+                <div class="preview-bars">
+                  <div class="preview-bar"></div>
+                  <div class="preview-bar"></div>
+                  <div class="preview-bar"></div>
+                  <div class="preview-bar"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-content">
+              <div class="project-type">
+                FINTECH · ONGOING DEVELOPMENT
+              </div>
+              <h3>EquityLens</h3>
+              <p>
+                A stock-market-focused financial
+                technology project designed around
+                portfolio management and future
+                market analysis capabilities.
+                Currently under active development,
+                with authentication and foundational
+                application architecture implemented.
+              </p>
+              <div class="project-tags">
+                <span class="tech-chip">ASP.NET Core</span>
+                <span class="tech-chip">React</span>
+                <span class="tech-chip">PostgreSQL</span>
+                <span class="tech-chip">JWT</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-preview">
+              <div class="preview-window">
+                <div class="preview-title">
+                  Business Application Engineering
+                </div>
+                <div class="preview-bars">
+                  <div class="preview-bar"></div>
+                  <div class="preview-bar"></div>
+                  <div class="preview-bar"></div>
+                  <div class="preview-bar"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-content">
+              <div class="project-type">
+                FULL-STACK DEVELOPMENT
+              </div>
+              <h3>Custom Business Systems</h3>
+              <p>
+                Development experience involving
+                backend APIs, database models,
+                authentication workflows,
+                business application interfaces,
+                and integrations.
+                Specific confidential client work
+                is not publicly disclosed.
+              </p>
+              <div class="project-tags">
+                <span class="tech-chip">.NET</span>
+                <span class="tech-chip">Node.js</span>
+                <span class="tech-chip">React</span>
+                <span class="tech-chip">SQL</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section class="section" id="process">
+      <div class="container">
+
+        <div class="section-heading reveal">
+          <span class="section-label">Our Workflow</span>
+          <h2>
+            From Idea to
+            <span class="gradient-text">Implementation.</span>
+          </h2>
+          <p>
+            A structured development approach
+            designed to keep scope, communication,
+            and deliverables clear.
+          </p>
+        </div>
+
+        <div class="process-grid">
+
+          <article class="process-card reveal">
+            <div class="process-number">01 / DISCOVER</div>
+            <h3>Understand</h3>
+            <p>
+              Discuss the business problem,
+              project goals, existing systems,
+              and expected outcomes.
+            </p>
+          </article>
+
+          <article class="process-card reveal">
+            <div class="process-number">02 / PLAN</div>
+            <h3>Define Scope</h3>
+            <p>
+              Identify features, technology,
+              milestones, dependencies,
+              and estimated delivery effort.
+            </p>
+          </article>
+
+          <article class="process-card reveal">
+            <div class="process-number">03 / BUILD</div>
+            <h3>Develop & Test</h3>
+            <p>
+              Implement agreed functionality,
+              review progress, and test
+              the application against requirements.
+            </p>
+          </article>
+
+          <article class="process-card reveal">
+            <div class="process-number">04 / DELIVER</div>
+            <h3>Launch & Improve</h3>
+            <p>
+              Support handover, deployment,
+              documentation, and future
+              improvements as agreed.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="contact">
+      <div class="container contact-grid">
+
+        <div class="contact-info reveal">
+          <span class="section-label">
+            Start a Conversation
+          </span>
+
+          <h2>
+            Have a Project
+            <span class="gradient-text">
+              in Mind?
+            </span>
+          </h2>
+
+          <p>
+            Whether you need a custom business
+            application, API integration,
+            website, dashboard, or technical
+            development support, tell us
+            what you're looking to build.
+          </p>
+
+          <div class="contact-point">
+            <span>⌘</span>
+            <span>Custom software development</span>
           </div>
-          <h3 class="card-title">Custom CRM Tools</h3>
-          <p class="card-desc">Tailored lead management and sales pipelines integrated directly into your operations.</p>
+
+          <div class="contact-point">
+            <span>◈</span>
+            <span>Remote collaboration available</span>
+          </div>
+
+          <div class="contact-point">
+            <span>◎</span>
+            <span>Pakistan & international inquiries</span>
+          </div>
+
+          <div class="contact-point">
+            <span>✉</span>
+            <a class="contact-email" href="mailto:itsmashood18@gmail.com">
+              itsmashood18@gmail.com
+            </a>
+          </div>
+
+          <a
+            href="https://github.com/Mashood-Zah1d"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
+            Explore GitHub ↗
+          </a>
         </div>
-        <span class="card-action" style="color: var(--text-dim);">In Development</span>
-      </div>
 
-    </div>
-  </section>
+        <div class="contact-form reveal">
+          <h3 class="form-title">
+            Tell Us About Your Project
+          </h3>
 
-  <!-- Capabilities Showcase -->
-  <section class="capabilities-section">
-    <div style="text-align: center; max-width: 500px; margin: 0 auto;">
-      <span class="section-tag">WHY QUBIX</span>
-      <h3 style="font-size: 1.8rem; margin-bottom: 8px;">The In-House Standard</h3>
-      <p style="color: var(--text-muted); font-size: 0.95rem;">No outsourcing, no heavy template bloat. Pure engineering excellence.</p>
-    </div>
+          <p class="form-description">
+            Share your requirements and preferred
+            contact details. Your inquiry will be
+            submitted directly from this page.
+          </p>
 
-    <div class="cap-grid">
-      <div class="cap-item">
-        <div class="cap-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <!-- Formspree AJAX Contact Form -->
+          <form
+            id="projectForm"
+            action="https://formspree.io/f/xwloljze"
+            method="POST"
+          >
+
+            <input
+              type="hidden"
+              name="_subject"
+              value="New Client Inquiry - Qubix Studio"
+            >
+
+            <div class="form-grid">
+
+              <div class="form-group">
+                <label for="clientName">Full Name *</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  id="clientName"
+                  name="name"
+                  placeholder="Your full name"
+                  autocomplete="name"
+                  maxlength="100"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="clientEmail">Email Address *</label>
+                <input
+                  class="form-control"
+                  type="email"
+                  id="clientEmail"
+                  name="email"
+                  placeholder="you@company.com"
+                  autocomplete="email"
+                  maxlength="254"
+                  required
+                >
+              </div>
+
+            </div>
+
+            <div class="form-grid">
+
+              <div class="form-group">
+                <label for="clientCompany">Company / Business</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  id="clientCompany"
+                  name="company"
+                  placeholder="Company name (optional)"
+                  maxlength="150"
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="clientPhone">Phone / WhatsApp</label>
+                <input
+                  class="form-control"
+                  type="tel"
+                  id="clientPhone"
+                  name="phone"
+                  placeholder="+92..."
+                  autocomplete="tel"
+                  maxlength="30"
+                >
+              </div>
+
+            </div>
+
+            <div class="form-grid">
+
+              <div class="form-group">
+                <label for="projectService">Service Required *</label>
+                <select
+                  class="form-control"
+                  id="projectService"
+                  name="service"
+                  required
+                >
+                  <option value="">Select a service</option>
+                  <option value="Custom Web Development">Custom Web Development</option>
+                  <option value="Business Software">Business Software / CRM</option>
+                  <option value="API Development">API Development & Integration</option>
+                  <option value="Cloud Deployment">Cloud / Azure Deployment</option>
+                  <option value="WordPress">WordPress Development</option>
+                  <option value="Shopify">Shopify Development</option>
+                  <option value="AI Automation">AI & Automation</option>
+                  <option value="Other">Other / Not Sure</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="projectBudget">Estimated Budget</label>
+                <select
+                  class="form-control"
+                  id="projectBudget"
+                  name="budget"
+                >
+                  <option value="">Select a budget (optional)</option>
+                  <option value="Under $500">Under $500</option>
+                  <option value="$500 - $1,000">$500 - $1,000</option>
+                  <option value="$1,000 - $3,000">$1,000 - $3,000</option>
+                  <option value="$3,000 - $5,000">$3,000 - $5,000</option>
+                  <option value="$5,000+">$5,000+</option>
+                  <option value="To Be Discussed">To Be Discussed</option>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <label for="projectMessage">Project Requirements *</label>
+              <textarea
+                class="form-control"
+                id="projectMessage"
+                name="message"
+                placeholder="Tell us about your project, required features, goals, and timeline..."
+                maxlength="5000"
+                required
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              id="submitButton"
+              class="btn btn-primary form-submit"
+            >
+              Submit Project Inquiry ↗
+            </button>
+
+            <div
+              id="formStatus"
+              class="form-status"
+              role="status"
+              aria-live="polite"
+            ></div>
+
+            <p class="form-note">
+              Your details will be submitted to our
+              contact form provider for email delivery.
+              Please do not include passwords or
+              confidential credentials.
+            </p>
+
+          </form>
         </div>
-        <h4 class="cap-title">Sub-Second Speed</h4>
-        <p class="cap-desc">Optimized DOM, clean CSS tokens, and minimal payloads for 60fps responsiveness.</p>
-      </div>
 
-      <div class="cap-item">
-        <div class="cap-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <h4 class="cap-title">Enterprise Security</h4>
-        <p class="cap-desc">Hardened backend integrations, Formspree encryption, and safe AI workflow endpoints.</p>
       </div>
+    </section>
 
-      <div class="cap-item">
-        <div class="cap-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        </div>
-        <h4 class="cap-title">Conversion Driven</h4>
-        <p class="cap-desc">Every line of code and visual component is aligned with real client revenue goals.</p>
-      </div>
-    </div>
-  </section>
+  </main>
 
   <!-- Footer -->
   <footer>
-    <div class="footer-left">
-      <div class="q-logo-symbol" style="width: 24px; height: 24px;">
-        <svg viewBox="0 0 32 32" fill="none">
-          <path d="M16 2L2 9V23L16 30L30 23V9L16 2Z" stroke="url(#f-logo-grad)" stroke-width="2.5"/>
-          <defs>
-            <linearGradient id="f-logo-grad" x1="2" y1="2" x2="30" y2="30">
-              <stop stop-color="#6366F1"/><stop offset="1" stop-color="#06B6D4"/>
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-      <span class="footer-sub">&copy; 2026 QUBIX STUDIO — ALL RIGHTS RESERVED</span>
-    </div>
+    <div class="container footer-inner">
 
-    <div class="socials">
-      <a href="#" class="social-btn" aria-label="LinkedIn"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24Z"/></svg></a>
-      <a href="#" class="social-btn" aria-label="X / Twitter"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-      <a href="#" class="social-btn" aria-label="GitHub"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></a>
+      <div>
+        <div class="footer-brand">
+          <span class="brand-symbol">Q</span>
+          <span class="brand-name">Qubix Studio</span>
+        </div>
+        <p class="footer-copy">
+          © <span id="currentYear"></span> Qubix Studio.
+          Software Engineering & Digital Solutions.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+
     </div>
   </footer>
-</div>
 
-<!-- Universal Quote Request Modal -->
-<div class="q-modal-overlay" id="quoteOverlay" aria-hidden="true">
-  <div class="q-modal-panel" role="dialog" aria-modal="true">
-    <button type="button" class="q-modal-close" id="quoteClose" aria-label="Close">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+  <script>
+    "use strict";
 
-    <div id="quoteFormWrap">
-      <span class="modal-head-pill">// REQUEST CUSTOM SCOPE</span>
-      <h3 class="modal-title">Launch Your Project</h3>
-      <p class="modal-sub">Submit your project details and our team will deliver a scoped proposal within 24 hours.</p>
+    document.addEventListener("DOMContentLoaded", () => {
 
-      <form id="quoteForm" novalidate>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="q-name">Your Name</label>
-            <input type="text" id="q-name" name="name" class="form-control" required placeholder="Alex Mercer">
-          </div>
-          <div class="form-group">
-            <label for="q-phone">Phone / WhatsApp</label>
-            <input type="tel" id="q-phone" name="phone" class="form-control" placeholder="+1 (555) 000-0000">
-          </div>
-        </div>
+      // Current year
+      const currentYear = document.getElementById("currentYear");
 
-        <div class="form-group">
-          <label for="q-email">Work Email</label>
-          <input type="email" id="q-email" name="email" class="form-control" required placeholder="alex@company.com">
-        </div>
+      if (currentYear) {
+        currentYear.textContent = new Date().getFullYear();
+      }
 
-        <div class="form-group">
-          <label for="q-service">Module Selection</label>
-          <select id="q-service" name="service" class="form-control" required>
-            <option value="" disabled selected>Select primary service</option>
-            <option value="Web Development">Web Development</option>
-            <option value="WordPress Engine">WordPress Engine</option>
-            <option value="Shopify Storefronts">Shopify Storefronts</option>
-            <option value="Social Growth Studio">Social Growth Studio</option>
-            <option value="AI Voice Call Agent">AI Voice Call Agent</option>
-            <option value="Multiple / Full Suite">Multiple / Full Suite</option>
-          </select>
-        </div>
+      // Mobile navigation
+      const menuToggle = document.getElementById("menuToggle");
+      const navLinks = document.getElementById("navLinks");
 
-        <div class="form-group">
-          <label for="q-message">Project Scope Details</label>
-          <textarea id="q-message" name="message" class="form-control" rows="3" placeholder="Briefly describe your goals, timeline, or requirements..."></textarea>
-        </div>
+      function closeMenu() {
+        if (!menuToggle || !navLinks) return;
 
-        <button type="submit" class="form-submit-btn" id="quoteSubmit">
-          <span id="quoteSubmitLabel">Transmit Request</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </form>
-    </div>
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+        document.body.classList.remove("menu-open");
+      }
 
-    <div id="quoteSuccess" style="display:none; text-align: center; padding: 20px 0;">
-      <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-emerald); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--accent-emerald);">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-      </div>
-      <h3 style="font-size: 1.4rem; margin-bottom: 8px;">Transmission Received</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">Thank you — a Qubix lead engineer will review your request and reach out within 24 hours.</p>
-    </div>
-  </div>
-</div>
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener("click", () => {
+          const isOpen = navLinks.classList.toggle("open");
 
-<script>
-  // Scroll progress bar logic
-  const bar = document.getElementById('progressBar');
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
-  }, { passive: true });
+          menuToggle.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+          );
 
-  // Mobile navigation menu toggle
-  const mobileToggleBtn = id('mobileToggleBtn');
-  const qNavLinks = id('qNavLinks');
-  if (mobileToggleBtn) {
-    mobileToggleBtn.addEventListener('click', () => {
-      qNavLinks.classList.toggle('mobile-open');
-    });
-  }
+          menuToggle.textContent = isOpen ? "✕" : "☰";
 
-  // Toast Notification System
-  function showToast(message) {
-    const container = id('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = 'toast-msg show';
-    toast.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #10B981;"><path d="M20 6L9 17l-5-5"/></svg>
-      <span>${message}</span>
-    `;
-    container.appendChild(toast);
-    setTimeout(() => {
-      toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 300);
-    }, 3200);
-  }
+          document.body.classList.toggle("menu-open", isOpen);
+        });
 
-  function id(elementId) {
-    return document.getElementById(elementId);
-  }
+        navLinks.querySelectorAll("a").forEach(link => {
+          link.addEventListener("click", closeMenu);
+        });
 
-  // Quote Modal Functionality
-  const overlay = id('quoteOverlay');
-  const closeBtn = id('quoteClose');
-  const form = id('quoteForm');
-  const formWrap = id('quoteFormWrap');
-  const successWrap = id('quoteSuccess');
-  const submitBtn = id('quoteSubmit');
-  const submitLabel = id('quoteSubmitLabel');
+        document.addEventListener("keydown", event => {
+          if (event.key === "Escape") {
+            closeMenu();
+          }
+        });
 
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgojbybl';
+        window.addEventListener("resize", () => {
+          if (window.innerWidth > 900) {
+            closeMenu();
+          }
+        });
+      }
 
-  function openModal() {
-    overlay.classList.add('open');
-    overlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal() {
-    overlay.classList.remove('open');
-    overlay.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
+      // Scroll progress
+      const progressBar = document.getElementById("progressBar");
 
-  document.querySelectorAll('[data-open-quote]').forEach(btn => {
-    btn.addEventListener('click', openModal);
-  });
-  closeBtn.addEventListener('click', closeModal);
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
-  });
+      function updateProgress() {
+        if (!progressBar) return;
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = id('q-name');
-    const email = id('q-email');
-    const service = id('q-service');
-    let valid = true;
+        const scrollableHeight =
+          document.documentElement.scrollHeight -
+          window.innerHeight;
 
-    [name, email, service].forEach(input => input.classList.remove('error'));
+        const progress = scrollableHeight > 0
+          ? (window.scrollY / scrollableHeight) * 100
+          : 0;
 
-    if (!name.value.trim()) { name.classList.add('error'); valid = false; }
-    if (!email.value.includes('@')) { email.classList.add('error'); valid = false; }
-    if (!service.value) { service.classList.add('error'); valid = false; }
+        progressBar.style.width =
+          Math.min(100, Math.max(0, progress)) + "%";
+      }
 
-    if (!valid) {
-      showToast('Please complete required form fields');
-      return;
-    }
-
-    submitBtn.disabled = true;
-    submitLabel.textContent = 'Transmitting...';
-
-    try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
+      window.addEventListener("scroll", updateProgress, {
+        passive: true
       });
 
-      if (res.ok) {
-        formWrap.style.display = 'none';
-        successWrap.style.display = 'block';
-        form.reset();
-        showToast('Request transmitted successfully');
-        setTimeout(closeModal, 3000);
+      window.addEventListener("resize", updateProgress);
+
+      updateProgress();
+
+      // Reveal animations
+      const revealElements = document.querySelectorAll(".reveal");
+
+      if (
+        "IntersectionObserver" in window &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        const revealObserver = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                revealObserver.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.08,
+            rootMargin: "0px 0px -30px 0px"
+          }
+        );
+
+        revealElements.forEach(element => {
+          revealObserver.observe(element);
+        });
       } else {
-        throw new Error('Network response non-ok');
+        revealElements.forEach(element => {
+          element.classList.add("visible");
+        });
       }
-    } catch (err) {
-      // Graceful fallback for local development / client demo
-      showToast('Simulating request transmission...');
-      setTimeout(() => {
-        formWrap.style.display = 'none';
-        successWrap.style.display = 'block';
-        form.reset();
-        setTimeout(closeModal, 3000);
-      }, 800);
-    } finally {
-      submitBtn.disabled = false;
-      submitLabel.textContent = 'Transmit Request';
-    }
-  });
-</script>
+
+      // =====================================
+      // Contact Form - Formspree AJAX
+      // =====================================
+
+      const projectForm = document.getElementById("projectForm");
+      const formStatus = document.getElementById("formStatus");
+      const submitButton = document.getElementById("submitButton");
+
+      const FORM_ENDPOINT =
+        "https://formspree.io/f/xwloljze";
+
+      if (projectForm && formStatus && submitButton) {
+
+        projectForm.action = FORM_ENDPOINT;
+        projectForm.method = "POST";
+
+        projectForm.addEventListener("submit", async event => {
+          event.preventDefault();
+
+          if (!projectForm.reportValidity()) {
+            return;
+          }
+
+          const originalButtonText = submitButton.textContent;
+
+          submitButton.disabled = true;
+          submitButton.textContent = "Sending Inquiry...";
+
+          formStatus.className = "form-status";
+          formStatus.textContent = "";
+
+          try {
+            const formData = new FormData(projectForm);
+
+            const response = await fetch(FORM_ENDPOINT, {
+              method: "POST",
+              body: formData,
+              headers: {
+                Accept: "application/json"
+              }
+            });
+
+            const contentType =
+              response.headers.get("content-type") || "";
+
+            let result = {};
+
+            if (contentType.includes("application/json")) {
+              result = await response.json();
+            }
+
+            if (!response.ok) {
+              let errorMessage =
+                "Your inquiry could not be submitted.";
+
+              if (
+                result &&
+                Array.isArray(result.errors) &&
+                result.errors.length > 0
+              ) {
+                errorMessage = result.errors
+                  .map(error => error.message)
+                  .filter(Boolean)
+                  .join(", ");
+              } else if (result && result.error) {
+                errorMessage = String(result.error);
+              }
+
+              throw new Error(errorMessage);
+            }
+
+            formStatus.className = "form-status success";
+
+            formStatus.textContent =
+              "Thank you! Your project inquiry has been submitted successfully. We will get back to you soon.";
+
+            projectForm.reset();
+
+          } catch (error) {
+            console.error(
+              "Qubix Studio contact form submission failed:",
+              error
+            );
+
+            formStatus.className = "form-status error";
+
+            formStatus.textContent =
+              "We could not submit your inquiry. Please try again or contact itsmashood18@gmail.com.";
+
+          } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+          }
+        });
+      }
+
+    });
+  </script>
+
 </body>
 </html>

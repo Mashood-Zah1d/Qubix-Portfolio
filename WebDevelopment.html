@@ -1,382 +1,1156 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Qubix Web Development — Full-stack React, Next.js, Node.js, and custom APIs built for extreme speed and scalability.">
+<meta name="description" content="Qubix Web Development — Custom full-stack web applications, APIs and business software.">
 <title>Web Development Solutions — Qubix Studio</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --bg-dark: #050811;
-    --bg-surface: #0b0f19;
-    --bg-card: rgba(15, 23, 42, 0.6);
-    --bg-card-hover: rgba(24, 34, 58, 0.85);
-    --border: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(99, 102, 241, 0.35);
-    --border-cyan: rgba(6, 182, 212, 0.4);
-    
-    --text-main: #F8FAFC;
-    --text-muted: #94A3B8;
-    --text-dim: #64748B;
-    
-    --primary: #6366F1;
-    --primary-glow: rgba(99, 102, 241, 0.25);
-    --accent-cyan: #06B6D4;
-    --accent-violet: #8B5CF6;
-    --accent-emerald: #10B981;
-    
-    --font-heading: 'Space Grotesk', -apple-system, sans-serif;
-    --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-    
-    --radius-lg: 18px;
-    --radius-md: 12px;
-    --radius-sm: 8px;
-    --radius-full: 9999px;
-    
-    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+:root {
+  --bg-dark: #050811;
+  --bg-surface: #0b0f19;
+  --bg-card: rgba(15,23,42,.6);
+  --bg-card-hover: rgba(24,34,58,.85);
+  --border: rgba(255,255,255,.08);
+  --border-hover: rgba(99,102,241,.35);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --primary: #6366f1;
+  --primary-glow: rgba(99,102,241,.25);
+  --accent-cyan: #06b6d4;
+  --accent-violet: #8b5cf6;
+  --accent-emerald: #10b981;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --radius-full: 9999px;
+  --ease-out: cubic-bezier(.16,1,.3,1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg-dark);
+}
+
+body {
+  background: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,h2,h3,h4,h5 {
+  font-family: var(--font-heading);
+  color: white;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible,
+.flip-card:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 4px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* Background */
+
+.bg-fx {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-glow-1 {
+  position: absolute;
+  top: -10%;
+  left: 20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(99,102,241,.15),
+    transparent 70%
+  );
+  filter: blur(90px);
+  border-radius: 50%;
+}
+
+.grid-pattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 20%,
+    #000 40%,
+    transparent 100%
+  );
+}
+
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--accent-cyan)
+  );
+  z-index: 1100;
+}
+
+/* Navigation */
+
+.q-navbar {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1140px,calc(100% - 32px));
+  z-index: 1000;
+  background: rgba(11,15,25,.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 10px 20px;
+}
+
+.q-nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.q-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.q-brand-name {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: white;
+  white-space: nowrap;
+}
+
+.q-brand-tag {
+  font-size: .65rem;
+  padding: 2px 6px;
+  background: rgba(99,102,241,.15);
+  border: 1px solid rgba(99,102,241,.3);
+  color: var(--accent-cyan);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+}
+
+.q-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.q-nav-link {
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color .2s;
+}
+
+.q-nav-link:hover,
+.q-nav-link.active {
+  color: white;
+}
+
+.q-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.q-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--accent-violet)
+  );
+  color: white;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: .85rem;
+  padding: 9px 18px;
+  border-radius: var(--radius-full);
+  transition: all .25s var(--ease-out);
+  box-shadow: 0 4px 20px var(--primary-glow);
+  border: 1px solid rgba(255,255,255,.15);
+}
+
+.q-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(99,102,241,.4);
+}
+
+.q-menu-toggle {
+  display: none;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+/* Main wrapper */
+
+.wrap {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 120px 24px 80px;
+  position: relative;
+  z-index: 2;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.03);
+  padding: 8px 16px;
+  font-size: .8rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  border-radius: var(--radius-full);
+  margin-bottom: 32px;
+  transition: all .2s;
+}
+
+.back-btn:hover {
+  border-color: var(--accent-cyan);
+  color: white;
+  transform: translateX(-4px);
+}
+
+/* Hero */
+
+.hero-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 50px;
+}
+
+.mod-pill {
+  display: inline-block;
+  font-size: .75rem;
+  font-family: var(--font-mono);
+  color: var(--accent-cyan);
+  background: rgba(6,182,212,.08);
+  border: 1px solid rgba(6,182,212,.25);
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-size: clamp(2.2rem,4vw,3.2rem);
+  margin-bottom: 16px;
+}
+
+.hero-sub {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+/* Pitch */
+
+.pitch-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  backdrop-filter: blur(12px);
+  margin-bottom: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.pitch-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-cyan),
+    transparent
+  );
+}
+
+.pitch-title {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pitch-desc {
+  color: var(--text-muted);
+  font-size: .95rem;
+  line-height: 1.7;
+}
+
+/* Interactive demo */
+
+.demo-section {
+  margin-bottom: 70px;
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.code-window,
+.render-window {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #080c16;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.5);
+}
+
+.demo-header {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: rgba(255,255,255,.02);
+  border-bottom: 1px solid var(--border);
+}
+
+.demo-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.demo-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.demo-dots .r { background: #ff5f56; }
+.demo-dots .y { background: #ffbd2e; }
+.demo-dots .g { background: #27c93f; }
+
+.demo-filename {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  color: var(--text-dim);
+}
+
+.code-body {
+  flex: 1;
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  line-height: 1.7;
+  color: #cbd5e1;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.code-body .tok-kw { color: #c792ea; }
+.code-body .tok-fn { color: #82aaff; }
+.code-body .tok-str { color: #c3e88d; }
+.code-body .tok-tag { color: #f07178; }
+
+.code-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 1em;
+  background: var(--accent-cyan);
+  vertical-align: -2px;
+  animation: cursorBlink .9s infinite;
+}
+
+@keyframes cursorBlink {
+  50% { opacity: 0; }
+}
+
+.render-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+}
+
+.render-badge {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  color: var(--accent-emerald);
+  border: 1px solid rgba(16,185,129,.3);
+  background: rgba(16,185,129,.08);
+  padding: 3px 8px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: all .4s;
+}
+
+.render-badge.show {
+  opacity: 1;
+}
+
+.mini-card {
+  width: 220px;
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-md);
+  background: rgba(15,23,42,.9);
+  padding: 16px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all .4s;
+  box-shadow: 0 10px 25px rgba(0,0,0,.5);
+}
+
+.mini-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mc-thumb {
+  height: 90px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--accent-cyan)
+  );
+}
+
+.mini-card h5 {
+  font-size: .95rem;
+  margin-bottom: 4px;
+}
+
+.mc-price {
+  color: var(--accent-cyan);
+  font-weight: 700;
+  font-size: .85rem;
+  margin-bottom: 12px;
+}
+
+.mc-btn {
+  width: 100%;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  font-size: .78rem;
+  font-weight: 700;
+  color: white;
+  background: var(--primary);
+}
+
+/* Tech stack */
+
+.stack-section {
+  margin-bottom: 70px;
+}
+
+.stack-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.stack-group-label {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  letter-spacing: 1px;
+  color: var(--accent-cyan);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stack-group-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.stack-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.stack-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,.02);
+  padding: 8px 14px;
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--text-main);
+  transition: all .2s;
+}
+
+.stack-pill:hover {
+  border-color: var(--accent-cyan);
+  background: rgba(6,182,212,.08);
+  transform: translateY(-2px);
+}
+
+.stack-pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+/* Portfolio */
+
+.portfolio-section {
+  margin-bottom: 70px;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+  gap: 24px;
+}
+
+.flip-card {
+  height: 400px;
+  perspective: 1500px;
+  cursor: pointer;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform .6s var(--ease-out);
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner,
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.card-front {
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-img-wrapper {
+  width: 100%;
+  height: 72%;
+  overflow: hidden;
+  position: relative;
+  background: #040711;
+}
+
+.card-img-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 60%,
+    var(--bg-surface)
+  );
+  pointer-events: none;
+}
+
+.card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform .4s;
+}
+
+.flip-card:hover .card-front img {
+  transform: scale(1.05);
+}
+
+.card-title-bar {
+  height: 28%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: white;
+  padding: 0 16px;
+}
+
+.card-back {
+  background: #0e1424;
+  border-color: var(--border-hover);
+  transform: rotateY(180deg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-back h4 {
+  font-size: 1.2rem;
+  color: var(--accent-cyan);
+  margin-bottom: 10px;
+}
+
+.card-back p {
+  font-size: .88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.tech-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.tech-tags span {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  border: 1px solid rgba(6,182,212,.3);
+  background: rgba(6,182,212,.08);
+  padding: 3px 8px;
+  border-radius: 4px;
+  color: var(--accent-cyan);
+}
+
+.preview-btn {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--accent-violet)
+  );
+  color: white;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-size: .85rem;
+  font-weight: 700;
+  transition: all .2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.preview-btn:hover {
+  opacity: .92;
+  transform: translateY(-2px);
+}
+
+/* Process */
+
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+  gap: 20px;
+}
+
+.process-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.process-step {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--accent-cyan);
+  margin-bottom: 8px;
+}
+
+.process-card h4 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.process-card p {
+  font-size: .88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Screenshot modal */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3,5,12,.92);
+  backdrop-filter: blur(16px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-container {
+  width: 92vw;
+  max-width: 1100px;
+  height: 86vh;
+  display: flex;
+  flex-direction: column;
+  background: #080d19;
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 40px 100px rgba(0,0,0,.9);
+  overflow: hidden;
+  transform: scale(.97);
+  transition: transform .3s var(--ease-out);
+}
+
+.modal-overlay.active .modal-container {
+  transform: scale(1);
+}
+
+.close-modal {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  z-index: 50;
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--border);
+  color: white;
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+}
+
+.close-modal:hover {
+  border-color: var(--accent-cyan);
+  background: rgba(6,182,212,.15);
+}
+
+.slideshow-wrapper {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.slide-track {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 60px;
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.browser-mockup {
+  width: 100%;
+  max-width: 860px;
+  height: 100%;
+  background: #0c1222;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,.8);
+}
+
+.browser-header {
+  background: rgba(255,255,255,.03);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.browser-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.browser-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.browser-dots .r { background: #ff5f56; }
+.browser-dots .y { background: #ffbd2e; }
+.browser-dots .g { background: #27c93f; }
+
+.browser-url-bar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background: rgba(0,0,0,.4);
+  width: 50%;
+  height: 22px;
+  border-radius: 4px;
+  color: var(--text-dim);
+  font-size: .7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.browser-screen {
+  flex: 1;
+  min-height: 0;
+  background: #030610;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.browser-screen img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.slide-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(11,15,25,.85);
+  border: 1px solid var(--border);
+  color: white;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
+}
+
+.slide-nav:hover {
+  border-color: var(--accent-cyan);
+  background: rgba(6,182,212,.2);
+}
+
+.slide-nav.prev { left: 16px; }
+.slide-nav.next { right: 16px; }
+
+.slideshow-footer {
+  background: #060a14;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+}
+
+.slide-caption h5 {
+  font-size: 1.05rem;
+}
+
+.slide-caption p {
+  font-size: .82rem;
+  color: var(--text-muted);
+}
+
+.slide-counter {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--accent-cyan);
+  border: 1px solid rgba(6,182,212,.3);
+  background: rgba(6,182,212,.08);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+/* Footer */
+
+footer {
+  margin-top: 80px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: .8rem;
+  color: var(--text-dim);
+}
+
+/* Responsive */
+
+@media (max-width: 1100px) {
+  .q-nav-links {
+    gap: 12px;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; background-color: var(--bg-dark); }
+  .q-nav-link {
+    font-size: .75rem;
+  }
+}
 
-  body {
-    background: var(--bg-dark);
-    color: var(--text-main);
-    font-family: var(--font-body);
-    min-height: 100vh;
-    overflow-x: hidden;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  h1, h2, h3, h4, h5 { font-family: var(--font-heading); color: #fff; font-weight: 700; letter-spacing: -0.02em; }
-  .mono { font-family: var(--font-mono); }
-  a { color: inherit; text-decoration: none; }
-  button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
-  button:focus-visible, a:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 3px; }
-
-  /* Background Ambient FX */
-  .bg-fx {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .bg-glow-1 {
-    position: absolute;
-    top: -10%;
-    left: 20%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-    filter: blur(90px);
-    border-radius: 50%;
-  }
-  .grid-pattern {
-    position: absolute;
-    inset: 0;
-    background-image: 
-      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, #000 40%, transparent 100%);
-  }
-
-  .progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    width: 0%;
-    background: linear-gradient(90deg, var(--primary), var(--accent-cyan));
-    z-index: 1100;
-  }
-
-  /* Global Navbar */
-  .q-navbar {
-    position: fixed;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(1140px, calc(100% - 32px));
-    z-index: 1000;
-    background: rgba(11, 15, 25, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-full);
-    padding: 10px 20px;
-  }
-  .q-nav-container { display: flex; align-items: center; justify-content: space-between; }
-  .q-brand { display: flex; align-items: center; gap: 10px; }
-  .q-brand-name { font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem; color: #fff; }
-  .q-brand-tag { font-size: 0.65rem; padding: 2px 6px; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); color: var(--accent-cyan); border-radius: 4px; font-family: var(--font-mono); }
-  .q-nav-links { display: flex; align-items: center; gap: 24px; }
-  .q-nav-link { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); transition: color 0.2s ease; }
-  .q-nav-link:hover, .q-nav-link.active { color: #fff; }
-  .q-nav-actions { display: flex; align-items: center; gap: 14px; }
-  .q-btn-primary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: linear-gradient(135deg, var(--primary), var(--accent-violet));
-    color: #fff; font-family: var(--font-heading); font-weight: 600; font-size: 0.85rem;
-    padding: 9px 18px; border-radius: var(--radius-full); transition: all 0.25s var(--ease-out);
-    box-shadow: 0 4px 20px var(--primary-glow); border: 1px solid rgba(255,255,255,0.15);
-  }
-  .q-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4); }
-
-  /* Page Wrapper */
-  .wrap {
-    max-width: 1140px;
-    margin: 0 auto;
-    padding: 120px 24px 80px;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Back Button */
-  .back-btn {
+@media (max-width: 900px) {
+  .q-menu-toggle {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.03);
-    padding: 8px 16px;
-    font-size: 0.8rem;
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-    border-radius: var(--radius-full);
-    margin-bottom: 32px;
-    transition: all 0.2s ease;
+    justify-content: center;
   }
-  .back-btn:hover { border-color: var(--accent-cyan); color: #fff; transform: translateX(-4px); }
 
-  /* Header Section */
-  .hero-header {
-    text-align: center;
-    max-width: 760px;
-    margin: 0 auto 50px;
-  }
-  .mod-pill {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-family: var(--font-mono);
-    color: var(--accent-cyan);
-    background: rgba(6, 182, 212, 0.08);
-    border: 1px solid rgba(6, 182, 212, 0.25);
-    padding: 5px 14px;
-    border-radius: var(--radius-full);
-    margin-bottom: 16px;
-  }
-  .hero-title { font-size: clamp(2.2rem, 4vw, 3.2rem); margin-bottom: 16px; }
-  .hero-sub { color: var(--text-muted); font-size: 1.05rem; line-height: 1.65; }
-
-  /* Value Pitch Box */
-  .pitch-box {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 32px;
-    backdrop-filter: blur(12px);
-    margin-bottom: 60px;
-    position: relative;
-    overflow: hidden;
-  }
-  .pitch-box::before {
-    content: '';
+  .q-nav-links {
+    display: none;
     position: absolute;
-    top: 0; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
-  }
-  .pitch-title { font-size: 1.3rem; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-  .pitch-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
-
-  /* Interactive Code Demo */
-  .demo-section { margin-bottom: 70px; }
-  .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  @media (max-width: 820px) { .demo-grid { grid-template-columns: 1fr; } }
-
-  .code-window, .render-window {
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    padding: 18px;
+    background: #0b0f19;
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    background: #080c16;
-    display: flex;
+    border-radius: 16px;
     flex-direction: column;
-    min-height: 300px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    align-items: stretch;
+    gap: 14px;
+    box-shadow: 0 20px 45px rgba(0,0,0,.45);
   }
-  .demo-header {
-    height: 42px;
+
+  .q-nav-links.open {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    background: rgba(255, 255, 255, 0.02);
-    border-bottom: 1px solid var(--border);
   }
-  .demo-dots { display: flex; gap: 6px; }
-  .demo-dots span { width: 8px; height: 8px; border-radius: 50%; }
-  .demo-dots .r { background: #FF5F56; }
-  .demo-dots .y { background: #FFBD2E; }
-  .demo-dots .g { background: #27C93F; }
-  .demo-filename { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); }
 
-  .code-body {
-    flex: 1; padding: 20px; font-family: var(--font-mono); font-size: 0.8rem;
-    line-height: 1.7; color: #cbd5e1; white-space: pre-wrap;
+  .q-nav-actions .q-btn-primary {
+    display: none;
   }
-  .code-body .tok-kw { color: #C792EA; }
-  .code-body .tok-fn { color: #82AAFF; }
-  .code-body .tok-str { color: #C3E88D; }
-  .code-body .tok-tag { color: #F07178; }
-  .code-cursor { display: inline-block; width: 6px; height: 1em; background: var(--accent-cyan); vertical-align: -2px; animation: cursorBlink 0.9s infinite; }
-  @keyframes cursorBlink { 50% { opacity: 0; } }
+}
 
-  .render-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px; position: relative; }
-  .render-badge {
-    position: absolute; top: 10px; right: 14px; font-family: var(--font-mono); font-size: 0.65rem;
-    color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.08);
-    padding: 3px 8px; border-radius: 4px; opacity: 0; transition: all 0.4s ease;
+@media (max-width: 820px) {
+  .demo-grid {
+    grid-template-columns: 1fr;
   }
-  .render-badge.show { opacity: 1; }
-  .mini-card {
-    width: 220px; border: 1px solid var(--border-hover); border-radius: var(--radius-md);
-    background: rgba(15, 23, 42, 0.9); padding: 16px; opacity: 0; transform: translateY(12px);
-    transition: all 0.4s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-  }
-  .mini-card.show { opacity: 1; transform: translateY(0); }
-  .mini-card .mc-thumb { height: 90px; border-radius: var(--radius-sm); margin-bottom: 12px; background: linear-gradient(135deg, var(--primary), var(--accent-cyan)); }
-  .mini-card h5 { font-size: 0.95rem; margin-bottom: 4px; }
-  .mini-card .mc-price { color: var(--accent-cyan); font-weight: 700; font-size: 0.85rem; margin-bottom: 12px; }
-  .mini-card .mc-btn { width: 100%; padding: 8px; border-radius: var(--radius-sm); text-align: center; font-size: 0.78rem; font-weight: 700; color: #fff; background: var(--primary); }
+}
 
-  /* Stack Section */
-  .stack-section { margin-bottom: 70px; }
-  .stack-groups { display: flex; flex-direction: column; gap: 24px; }
-  .stack-group-label { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 1px; color: var(--accent-cyan); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-  .stack-group-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-  .stack-pills { display: flex; flex-wrap: wrap; gap: 10px; }
-  .stack-pill {
-    display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border);
-    border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.02); padding: 8px 14px;
-    font-size: 0.85rem; font-weight: 500; color: var(--text-main); transition: all 0.2s ease;
+@media (max-width: 600px) {
+  .wrap {
+    padding: 110px 16px 55px;
   }
-  .stack-pill:hover { border-color: var(--accent-cyan); background: rgba(6, 182, 212, 0.08); transform: translateY(-2px); }
-  .stack-pill .dot { width: 6px; height: 6px; border-radius: 50%; }
 
-  /* Portfolio Cases Flip Cards */
-  .portfolio-section { margin-bottom: 70px; }
-  .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
-  .flip-card { height: 400px; perspective: 1500px; cursor: pointer; }
-  .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s var(--ease-out); transform-style: preserve-3d; }
-  .flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-  .card-front, .card-back {
-    position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden;
-    border-radius: var(--radius-lg); border: 1px solid var(--border); overflow: hidden;
+  .pitch-box {
+    padding: 22px;
   }
-  .card-front { background: var(--bg-card); display: flex; flex-direction: column; }
-  .card-img-wrapper { width: 100%; height: 72%; overflow: hidden; position: relative; background: #040711; }
-  .card-img-wrapper::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, var(--bg-surface) 100%); }
-  .card-front img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 0.4s ease; }
-  .flip-card:hover .card-front img { transform: scale(1.05); }
-  .card-title-bar { height: 28%; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-weight: 700; font-size: 1.15rem; color: #fff; padding: 0 16px; }
-  .card-back {
-    background: #0e1424; border-color: var(--border-hover); transform: rotateY(180deg);
-    padding: 28px; display: flex; flex-direction: column; justify-content: space-between;
-  }
-  .card-back h4 { font-size: 1.2rem; color: var(--accent-cyan); margin-bottom: 10px; }
-  .card-back p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
-  .tech-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
-  .tech-tags span { font-family: var(--font-mono); font-size: 0.68rem; border: 1px solid rgba(6, 182, 212, 0.3); background: rgba(6, 182, 212, 0.08); padding: 3px 8px; border-radius: 4px; color: var(--accent-cyan); }
-  .preview-btn {
-    background: linear-gradient(135deg, var(--primary), var(--accent-violet)); color: #fff; padding: 12px; border-radius: var(--radius-sm);
-    font-family: var(--font-heading); font-size: 0.85rem; font-weight: 700; transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
-  }
-  .preview-btn:hover { opacity: 0.92; transform: translateY(-2px); }
 
-  /* Process Steps */
-  .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-  .process-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
-  .process-step { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-cyan); margin-bottom: 8px; }
-  .process-card h4 { font-size: 1.1rem; margin-bottom: 8px; }
-  .process-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
-
-  /* Showcase Modal */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(3, 5, 12, 0.92); backdrop-filter: blur(16px);
-    z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  .portfolio-grid {
+    grid-template-columns: minmax(0,1fr);
   }
-  .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+  .flip-card {
+    height: 380px;
+  }
+
   .modal-container {
-    width: 92vw; max-width: 1100px; height: 86vh; display: flex; flex-direction: column;
-    background: #080d19; border: 1px solid var(--border-hover); border-radius: var(--radius-lg);
-    box-shadow: 0 40px 100px rgba(0,0,0,0.9); overflow: hidden; transform: scale(0.97); transition: transform 0.3s var(--ease-out);
+    width: 96vw;
+    height: 88vh;
   }
-  .modal-overlay.active .modal-container { transform: scale(1); }
-  .close-modal {
-    position: absolute; top: 16px; right: 20px; z-index: 50; background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border); color: #fff; font-family: var(--font-mono); font-size: 0.75rem;
-    padding: 6px 14px; border-radius: var(--radius-sm); cursor: pointer; transition: all 0.2s ease;
-  }
-  .close-modal:hover { border-color: var(--accent-cyan); background: rgba(6, 182, 212, 0.15); }
 
-  .slideshow-wrapper { flex: 1; width: 100%; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  .slide-track { width: 100%; height: 100%; position: relative; }
-  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px 60px; pointer-events: none; }
-  .slide.active { opacity: 1; pointer-events: auto; }
-
-  .browser-mockup {
-    width: 100%; max-width: 860px; height: 100%; background: #0c1222; border-radius: var(--radius-md);
-    border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+  .slide {
+    padding: 18px 8px;
   }
-  .browser-header { background: rgba(255, 255, 255, 0.03); height: 40px; display: flex; align-items: center; padding: 0 16px; border-bottom: 1px solid var(--border); position: relative; }
-  .browser-dots { display: flex; gap: 6px; }
-  .browser-dots span { width: 8px; height: 8px; border-radius: 50%; }
-  .browser-dots .r { background: #FF5F56; } .browser-dots .y { background: #FFBD2E; } .browser-dots .g { background: #27C93F; }
-  .browser-url-bar { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); background: rgba(0,0,0,0.4); width: 50%; height: 22px; border-radius: 4px; color: var(--text-dim); font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); }
-  .browser-screen { flex: 1; background: #030610; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  .browser-screen img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
   .slide-nav {
-    position: absolute; top: 50%; transform: translateY(-50%); background: rgba(11, 15, 25, 0.85);
-    border: 1px solid var(--border); color: #fff; width: 44px; height: 44px; border-radius: 50%;
-    cursor: pointer; z-index: 30; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+    width: 34px;
+    height: 34px;
   }
-  .slide-nav:hover { border-color: var(--accent-cyan); background: rgba(6, 182, 212, 0.2); }
-  .slide-nav.prev { left: 16px; } .slide-nav.next { right: 16px; }
 
-  .slideshow-footer { background: #060a14; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
-  .slide-caption h5 { font-size: 1.05rem; color: #fff; }
-  .slide-caption p { font-size: 0.82rem; color: var(--text-muted); }
-  .slide-counter { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-cyan); border: 1px solid rgba(6, 182, 212, 0.3); background: rgba(6, 182, 212, 0.08); padding: 4px 10px; border-radius: 4px; }
+  .slide-nav.prev { left: 6px; }
+  .slide-nav.next { right: 6px; }
 
-  footer { margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; color: var(--text-dim); }
+  .browser-url-bar {
+    width: 62%;
+    font-size: .55rem;
+  }
+
+  .slideshow-footer {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  footer {
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <div class="progress" id="progress"></div>
-<div class="bg-fx"><div class="bg-glow-1"></div><div class="grid-pattern"></div></div>
 
-<!-- GLOBAL QUBIX NAVBAR -->
+<div class="bg-fx">
+  <div class="bg-glow-1"></div>
+  <div class="grid-pattern"></div>
+</div>
+
+<!-- NAVIGATION -->
+
 <header class="q-navbar">
   <div class="q-nav-container">
+
     <a href="index.html" class="q-brand">
       <div class="q-logo-symbol" style="width:28px;height:28px;">
         <svg viewBox="0 0 32 32" fill="none">
-          <path d="M16 2L2 9V23L16 30L30 23V9L16 2Z" stroke="url(#nav-grad)" stroke-width="2.5"/>
-          <defs><linearGradient id="nav-grad" x1="2" y1="2" x2="30" y2="30"><stop stop-color="#6366F1"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs>
+          <path
+            d="M16 2L2 9V23L16 30L30 23V9L16 2Z"
+            stroke="url(#nav-grad)"
+            stroke-width="2.5"
+          />
+          <defs>
+            <linearGradient
+              id="nav-grad"
+              x1="2" y1="2" x2="30" y2="30"
+            >
+              <stop stop-color="#6366F1"/>
+              <stop offset="1" stop-color="#06B6D4"/>
+            </linearGradient>
+          </defs>
         </svg>
       </div>
-      <span class="q-brand-name">QUBIX <span class="q-brand-tag">DEV</span></span>
+
+      <span class="q-brand-name">
+        QUBIX <span class="q-brand-tag">DEV</span>
+      </span>
     </a>
 
-    <nav class="q-nav-links">
+    <nav
+      class="q-nav-links"
+      id="mobileNav"
+      aria-label="Primary navigation"
+    >
       <a href="index.html" class="q-nav-link">Overview</a>
       <a href="WebDevelopment.html" class="q-nav-link active">Web Dev</a>
       <a href="Wordpress.html" class="q-nav-link">WordPress</a>
@@ -386,44 +1160,111 @@
     </nav>
 
     <div class="q-nav-actions">
-      <button type="button" class="q-btn-primary" onclick="window.location.href='index.html#services'">
-        <span>View All Services</span>
+      <button
+        type="button"
+        class="q-menu-toggle"
+        id="mobileMenuButton"
+        aria-label="Toggle navigation"
+        aria-expanded="false"
+        aria-controls="mobileNav"
+      >☰</button>
+
+      <button
+        type="button"
+        class="q-btn-primary"
+        onclick="window.location.href='index.html#services'"
+      >
+        View All Services
       </button>
     </div>
+
   </div>
 </header>
 
 <div class="wrap">
+
   <a href="index.html" class="back-btn">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+    >
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
     <span>Return to System Portal</span>
   </a>
 
+  <!-- HERO -->
+
   <header class="hero-header">
-    <span class="mod-pill">MOD.01 — FULL-STACK ARCHITECTURE</span>
-    <h1 class="hero-title">Custom Web Engineering</h1>
-    <p class="hero-sub">Production-grade web applications engineered from database to browser for maximum speed, security, and long-term ownership.</p>
+    <span class="mod-pill">
+      MOD.01 — FULL-STACK ARCHITECTURE
+    </span>
+
+    <h1 class="hero-title">
+      Custom Web Engineering
+    </h1>
+
+    <p class="hero-sub">
+      Custom web applications designed from database
+      to browser, with performance, maintainability,
+      and practical business needs in mind.
+    </p>
   </header>
+
+  <!-- PITCH -->
 
   <div class="pitch-box">
     <h3 class="pitch-title">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--accent-cyan)"
+        stroke-width="2"
+      >
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <line x1="8" y1="21" x2="16" y2="21"/>
+        <line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
       One Engineering Team, the Entire Stack
     </h3>
-    <p class="pitch-desc">We design and build production-grade web applications end to end — React and Next.js on the front, Node.js with PostgreSQL or MongoDB underneath, plus real-time features, custom AI-powered assistants, and clean REST or GraphQL APIs. No page builders, no templated shortcuts — every line is written specifically for your business.</p>
+
+    <p class="pitch-desc">
+      We build tailored web applications with modern
+      frontends, reliable backend APIs, and structured
+      databases. The technology is chosen to fit your
+      business requirements, maintainability, and
+      future growth.
+    </p>
   </div>
 
-  <!-- Interactive Typewriter Code Demo -->
+  <!-- LIVE UI DEMO -->
+
   <section class="demo-section">
-    <div style="text-align: center; margin-bottom: 24px;">
-      <h3 style="font-size: 1.5rem; margin-bottom: 6px;">Live Code Compiler Simulation</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">Watch a component compile in real time into an active UI element.</p>
+
+    <div style="text-align:center;margin-bottom:24px;">
+      <h3 style="font-size:1.5rem;margin-bottom:6px;">
+        Live UI Build Simulation
+      </h3>
+      <p style="color:var(--text-muted);font-size:.9rem;">
+        Watch a component being typed and a UI preview appear.
+      </p>
     </div>
 
     <div class="demo-grid">
+
       <div class="code-window">
         <div class="demo-header">
-          <div class="demo-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+          <div class="demo-dots">
+            <span class="r"></span>
+            <span class="y"></span>
+            <span class="g"></span>
+          </div>
           <span class="demo-filename">ProductCard.jsx</span>
         </div>
         <div class="code-body" id="codeBody"></div>
@@ -431,10 +1272,17 @@
 
       <div class="render-window">
         <div class="demo-header">
-          <div class="demo-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+          <div class="demo-dots">
+            <span class="r"></span>
+            <span class="y"></span>
+            <span class="g"></span>
+          </div>
           <span class="demo-filename">localhost:3000</span>
-          <span class="render-badge" id="renderBadge">LIVE COMPILED</span>
+          <span class="render-badge" id="renderBadge">
+            UI PREVIEW READY
+          </span>
         </div>
+
         <div class="render-body">
           <div class="mini-card" id="miniCard">
             <div class="mc-thumb"></div>
@@ -444,381 +1292,858 @@
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- Tech Stack Grid -->
+  <!-- TECH STACK -->
+
   <section class="stack-section">
-    <div style="margin-bottom: 24px;">
-      <h3 style="font-size: 1.5rem; margin-bottom: 6px;">Technology Stack</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">The frameworks and databases we use to build high-performance software.</p>
+
+    <div style="margin-bottom:24px;">
+      <h3 style="font-size:1.5rem;margin-bottom:6px;">
+        Technology Stack
+      </h3>
+      <p style="color:var(--text-muted);font-size:.9rem;">
+        The frameworks and databases we use to build
+        high-performance software.
+      </p>
     </div>
 
     <div class="stack-groups">
+
       <div>
-        <div class="stack-group-label">FRONTEND ENGINEERING</div>
+        <div class="stack-group-label">
+          FRONTEND ENGINEERING
+        </div>
+
         <div class="stack-pills">
-          <span class="stack-pill"><span class="dot" style="background:#61dafb;"></span>React JS</span>
-          <span class="stack-pill"><span class="dot" style="background:#fff;"></span>Next.js</span>
-          <span class="stack-pill"><span class="dot" style="background:#e34f26;"></span>HTML5</span>
-          <span class="stack-pill"><span class="dot" style="background:#2965f1;"></span>CSS3</span>
-          <span class="stack-pill"><span class="dot" style="background:#f7df1e;"></span>JavaScript</span>
-          <span class="stack-pill"><span class="dot" style="background:#3178c6;"></span>TypeScript</span>
-          <span class="stack-pill"><span class="dot" style="background:#38bdf8;"></span>Tailwind CSS</span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#61dafb;"></span>
+            React JS
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#fff;"></span>
+            Next.js
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#e34f26;"></span>
+            HTML5
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#2965f1;"></span>
+            CSS3
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#f7df1e;"></span>
+            JavaScript
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#3178c6;"></span>
+            TypeScript
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#38bdf8;"></span>
+            Tailwind CSS
+          </span>
         </div>
       </div>
 
       <div>
-        <div class="stack-group-label">BACKEND &amp; API INFRASTRUCTURE</div>
+        <div class="stack-group-label">
+          BACKEND & API INFRASTRUCTURE
+        </div>
+
         <div class="stack-pills">
-          <span class="stack-pill"><span class="dot" style="background:#3c873a;"></span>Node.js</span>
-          <span class="stack-pill"><span class="dot" style="background:#e0e0e0;"></span>Express.js</span>
-          <span class="stack-pill"><span class="dot" style="background:#e10098;"></span>GraphQL</span>
-          <span class="stack-pill"><span class="dot" style="background:#6366f1;"></span>REST APIs</span>
-          <span class="stack-pill"><span class="dot" style="background:#f2c94c;"></span>Custom AI Assistants</span>
-          <span class="stack-pill"><span class="dot" style="background:#e02bbb;"></span>WebSockets</span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#3c873a;"></span>
+            Node.js
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#e0e0e0;"></span>
+            Express.js
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#e10098;"></span>
+            GraphQL
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#6366f1;"></span>
+            REST APIs
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#f2c94c;"></span>
+            Custom AI Assistants
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#e02bbb;"></span>
+            WebSockets
+          </span>
         </div>
       </div>
 
       <div>
-        <div class="stack-group-label">DATA &amp; DEPLOYMENT</div>
+        <div class="stack-group-label">
+          DATA & DEPLOYMENT
+        </div>
+
         <div class="stack-pills">
-          <span class="stack-pill"><span class="dot" style="background:#4ea94b;"></span>MongoDB</span>
-          <span class="stack-pill"><span class="dot" style="background:#336791;"></span>PostgreSQL</span>
-          <span class="stack-pill"><span class="dot" style="background:#dc382d;"></span>Redis</span>
-          <span class="stack-pill"><span class="dot" style="background:#2496ed;"></span>Docker</span>
-          <span class="stack-pill"><span class="dot" style="background:#ff9900;"></span>AWS</span>
-          <span class="stack-pill"><span class="dot" style="background:#10b981;"></span>Vercel</span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#4ea94b;"></span>
+            MongoDB
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#336791;"></span>
+            PostgreSQL
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#dc382d;"></span>
+            Redis
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#2496ed;"></span>
+            Docker
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#ff9900;"></span>
+            AZURE
+          </span>
+          <span class="stack-pill">
+            <span class="dot" style="background:#10b981;"></span>
+            Vercel
+          </span>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- Portfolio Flip Cards Grid -->
+  <!-- ORIGINAL PROJECT PICTURES -->
+
   <section class="portfolio-section">
-    <div style="margin-bottom: 24px;">
-      <h3 style="font-size: 1.5rem; margin-bottom: 6px;">Production Case Studies</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">Hover or tap cards to inspect architecture and launch live visual preview.</p>
+
+    <div style="margin-bottom:24px;">
+      <h3 style="font-size:1.5rem;margin-bottom:6px;">
+        Selected Project Screenshots
+      </h3>
+      <p style="color:var(--text-muted);font-size:.9rem;">
+        Hover or tap a card to view details,
+        then browse its original screenshots.
+      </p>
     </div>
 
     <div class="portfolio-grid">
-      
-      <div class="flip-card">
+
+      <!-- PROJECT 1 -->
+
+      <div
+        class="flip-card"
+        role="button"
+        tabindex="0"
+        aria-label="Flip Cartinix Storefront card"
+      >
         <div class="flip-card-inner">
+
           <div class="card-front">
             <div class="card-img-wrapper">
-              <img src="picture/pexels-yousefsammm-16093243.jpg" alt="Cartinix Storefront" loading="lazy">
+              <img
+                src="picture/pexels-yousefsammm-16093243.jpg"
+                alt="Cartinix Storefront"
+                loading="lazy"
+              >
             </div>
-            <div class="card-title-bar">Cartinix — Storefront</div>
+
+            <div class="card-title-bar">
+              Cartinix — Storefront
+            </div>
           </div>
+
           <div class="card-back">
             <div>
               <h4>Cartinix — Storefront</h4>
-              <p>A real-time e-commerce watch store with a fast, responsive browsing experience, live inventory, and a streamlined checkout built for conversion.</p>
+              <p>
+                A real-time e-commerce watch store
+                with a fast, responsive browsing
+                experience, live inventory, and
+                a streamlined checkout built
+                for conversion.
+              </p>
+
               <div class="tech-tags">
-                <span>React</span><span>Node.js</span><span>PostgreSQL</span><span>REST API</span>
+                <span>React</span>
+                <span>Node.js</span>
+                <span>PostgreSQL</span>
+                <span>REST API</span>
               </div>
             </div>
-            <button class="preview-btn" onclick="openShowcase('northline', 'https://cartinix.store')">
-              <span>Launch Live Preview</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+
+            <button
+              type="button"
+              class="preview-btn"
+              onclick="openShowcase('northline','https://cartinix.store')"
+            >
+              <span>View Screenshots</span>
+              <span>→</span>
             </button>
           </div>
+
         </div>
       </div>
 
-      <div class="flip-card">
+      <!-- PROJECT 2 -->
+
+      <div
+        class="flip-card"
+        role="button"
+        tabindex="0"
+        aria-label="Flip Cartinix Admin Dashboard card"
+      >
         <div class="flip-card-inner">
+
           <div class="card-front">
             <div class="card-img-wrapper">
-              <img src="picture/pexels-czapp-arpad-3647289-10321027.jpg" alt="Cartinix Admin Panel" loading="lazy">
+              <img
+                src="picture/pexels-czapp-arpad-3647289-10321027.jpg"
+                alt="Cartinix Admin Panel"
+                loading="lazy"
+              >
             </div>
-            <div class="card-title-bar">Cartinix — Admin Dashboard</div>
+
+            <div class="card-title-bar">
+              Cartinix — Admin Dashboard
+            </div>
           </div>
+
           <div class="card-back">
             <div>
               <h4>Cartinix — Admin Panel</h4>
-              <p>The operations backbone behind Cartinix: order tracking, inventory control, and sales insights in one clean, role-based dashboard.</p>
+              <p>
+                The operations backbone behind
+                Cartinix: order tracking,
+                inventory control, and sales
+                insights in one clean,
+                role-based dashboard.
+              </p>
+
               <div class="tech-tags">
-                <span>Next.js</span><span>MongoDB</span><span>REST API</span><span>Dashboard</span>
+                <span>Next.js</span>
+                <span>MongoDB</span>
+                <span>REST API</span>
+                <span>Dashboard</span>
               </div>
             </div>
-            <button class="preview-btn" onclick="openShowcase('havenwear', 'https://admin.cartinix.store')">
-              <span>Launch Live Preview</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+
+            <button
+              type="button"
+              class="preview-btn"
+              onclick="openShowcase('havenwear','https://admin.cartinix.store')"
+            >
+              <span>View Screenshots</span>
+              <span>→</span>
             </button>
           </div>
+
         </div>
       </div>
 
-      <div class="flip-card">
+      <!-- PROJECT 3 -->
+
+      <div
+        class="flip-card"
+        role="button"
+        tabindex="0"
+        aria-label="Flip Portfolio Engine card"
+      >
         <div class="flip-card-inner">
+
           <div class="card-front">
             <div class="card-img-wrapper">
-              <img src="picture/pexels-apollonia-363024912-29279567.jpg" alt="Portfolio Website" loading="lazy">
+              <img
+                src="picture/pexels-apollonia-363024912-29279567.jpg"
+                alt="Portfolio Website"
+                loading="lazy"
+              >
             </div>
-            <div class="card-title-bar">Portfolio Engine</div>
+
+            <div class="card-title-bar">
+              Portfolio Engine
+            </div>
           </div>
+
           <div class="card-back">
             <div>
               <h4>Portfolio Platform</h4>
-              <p>A polished, fast-loading digital portfolio site — clean layout, smooth navigation, and a modern technical foundation built to impress.</p>
+              <p>
+                A polished, fast-loading digital
+                portfolio site — clean layout,
+                smooth navigation, and a modern
+                technical foundation.
+              </p>
+
               <div class="tech-tags">
-                <span>TypeScript</span><span>HTML5</span><span>CSS3</span><span>Responsive</span>
+                <span>TypeScript</span>
+                <span>HTML5</span>
+                <span>CSS3</span>
+                <span>Responsive</span>
               </div>
             </div>
-            <button class="preview-btn" onclick="openShowcase('relay', 'https://qubix.studio')">
-              <span>Launch Live Preview</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+
+            <button
+              type="button"
+              class="preview-btn"
+              onclick="openShowcase('relay','https://qubix.studio')"
+            >
+              <span>View Screenshots</span>
+              <span>→</span>
             </button>
           </div>
+
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- Process Section -->
-  <section style="margin-bottom: 50px;">
-    <div style="margin-bottom: 24px;">
-      <h3 style="font-size: 1.5rem; margin-bottom: 6px;">Engineering Process</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">How we ship production code on schedule.</p>
+  <!-- ENGINEERING PROCESS -->
+
+  <section style="margin-bottom:50px;">
+
+    <div style="margin-bottom:24px;">
+      <h3 style="font-size:1.5rem;margin-bottom:6px;">
+        Engineering Process
+      </h3>
+      <p style="color:var(--text-muted);font-size:.9rem;">
+        How we approach software delivery.
+      </p>
     </div>
 
     <div class="process-grid">
+
       <div class="process-card">
         <div class="process-step">01 // DISCOVERY</div>
         <h4>Map System Models</h4>
-        <p>We scope data models, integrations, and user flows before writing code.</p>
+        <p>
+          We scope data models, integrations,
+          and user flows before writing code.
+        </p>
       </div>
+
       <div class="process-card">
         <div class="process-step">02 // ARCHITECTURE</div>
         <h4>Design for Scale</h4>
-        <p>API contracts, database schema, and infrastructure choices are made deliberately.</p>
+        <p>
+          API contracts, database schema,
+          and infrastructure choices
+          are made deliberately.
+        </p>
       </div>
+
       <div class="process-card">
         <div class="process-step">03 // ITERATION</div>
-        <h4>Incremental Ships</h4>
-        <p>Working software delivered every sprint, tested against real benchmarks.</p>
+        <h4>Incremental Delivery</h4>
+        <p>
+          Functionality is developed and tested
+          in manageable stages with regular
+          progress reviews.
+        </p>
       </div>
+
       <div class="process-card">
         <div class="process-step">04 // HANDOFF</div>
-        <h4>100% Code Ownership</h4>
-        <p>Documented, tested, and deployed to your own infrastructure with zero lock-in.</p>
+        <h4>Clear Handover</h4>
+        <p>
+          Documentation and deployment support
+          are provided according to the
+          agreed project scope.
+        </p>
       </div>
+
     </div>
   </section>
 
   <footer>
-    <span class="mono">&copy; 2026 QUBIX STUDIO — ALL CODE BUILT IN-HOUSE</span>
-    <a href="index.html" style="color: var(--accent-cyan);">Back to Overview &rarr;</a>
+    <span class="mono">
+      © 2026 QUBIX STUDIO — SOFTWARE & DIGITAL SOLUTIONS
+    </span>
+
+    <a href="index.html" style="color:var(--accent-cyan);">
+      Back to Overview →
+    </a>
   </footer>
+
 </div>
 
-<!-- Lightbox Slideshow Modal -->
-<div class="modal-overlay" id="slideshow-modal">
+<!-- ORIGINAL SCREENSHOT GALLERY MODAL -->
+
+<div
+  class="modal-overlay"
+  id="slideshow-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Project screenshot gallery"
+  aria-hidden="true"
+  tabindex="-1"
+>
   <div class="modal-container">
-    <button class="close-modal" onclick="closeShowcase()">✕ Close</button>
+
+    <button
+      type="button"
+      class="close-modal"
+      onclick="closeShowcase()"
+    >
+      ✕ Close
+    </button>
 
     <div class="slideshow-wrapper">
-      <button class="slide-nav prev" onclick="changeSlide(-1)">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+
+      <button
+        type="button"
+        class="slide-nav prev"
+        aria-label="Previous screenshot"
+        onclick="changeSlide(-1)"
+      >
+        ❮
       </button>
-      <button class="slide-nav next" onclick="changeSlide(1)">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+
+      <button
+        type="button"
+        class="slide-nav next"
+        aria-label="Next screenshot"
+        onclick="changeSlide(1)"
+      >
+        ❯
       </button>
 
       <div class="slide-track" id="slide-track"></div>
+
     </div>
 
     <div class="slideshow-footer">
       <div class="slide-caption">
         <h5 id="modal-title">Project Preview</h5>
-        <p id="modal-desc">Interactive production scroll mode.</p>
+        <p id="modal-desc">
+          Browse project screenshots.
+        </p>
       </div>
-      <div class="slide-counter" id="modal-counter">1 / 10</div>
+
+      <div class="slide-counter" id="modal-counter">
+        1 / 10
+      </div>
     </div>
+
   </div>
 </div>
 
 <script>
-  const bar = document.getElementById('progress');
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
-  }, { passive: true });
+"use strict";
 
-  const projectsData = {
-    northline: {
-      title: "Cartinix — Storefront",
-      desc: "Real-time e-commerce watch store with a fast browsing and checkout experience.",
-      images: [
-        "picture/Screenshot 2026-07-02 022554.png",
-        "picture/Screenshot 2026-07-02 022605.png",
-        "picture/Screenshot 2026-07-02 022641.png",
-        "picture/Screenshot 2026-07-02 022718.png",
-        "picture/Screenshot 2026-07-02 022737.png",
-        "picture/Screenshot 2026-07-02 022821.png",
-        "picture/Screenshot 2026-07-02 022850.png",
-        "picture/Screenshot 2026-07-02 022928.png",
-        "picture/Screenshot 2026-07-02 023013.png",
-        "picture/Screenshot 2026-07-02 023027.png"
-      ]
-    },
-    havenwear: {
-      title: "Cartinix — Admin Panel",
-      desc: "The full e-commerce admin dashboard for managing orders, inventory, and sales.",
-      images: [
-        "picture/Screenshot 2026-07-02 025951.png",
-        "picture/Screenshot 2026-07-02 030007.png",
-        "picture/Screenshot 2026-07-02 030438.png",
-        "picture/Screenshot 2026-07-02 030344.png",
-        "picture/Screenshot 2026-07-02 030504.png"
-      ]
-    },
-    relay: {
-      title: "Portfolio Website",
-      desc: "A clean, fast personal portfolio site built to make a strong first impression.",
-      images: [
-        "picture/Screenshot 2026-07-02 032331.png",
-        "picture/Screenshot 2026-07-02 032357.png",
-        "picture/Screenshot 2026-07-02 032424.png",
-        "picture/Screenshot 2026-07-02 032439.png",
-        "picture/Screenshot 2026-07-02 032509.png",
-        "picture/Screenshot 2026-07-02 032531.png",
-        "picture/Screenshot 2026-07-02 032607.png"
-      ]
+// Scroll progress
+const bar = document.getElementById("progress");
+
+function updateScrollProgress() {
+  const height =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
+
+  bar.style.width =
+    (height > 0 ? (window.scrollY / height) * 100 : 0) + "%";
+}
+
+window.addEventListener("scroll", updateScrollProgress, {
+  passive: true
+});
+
+updateScrollProgress();
+
+// All original gallery image links
+const projectsData = {
+  northline: {
+    title: "Cartinix — Storefront",
+    desc: "Real-time e-commerce watch store with a fast browsing and checkout experience.",
+    images: [
+      "picture/Screenshot 2026-07-02 022554.png",
+      "picture/Screenshot 2026-07-02 022605.png",
+      "picture/Screenshot 2026-07-02 022641.png",
+      "picture/Screenshot 2026-07-02 022718.png",
+      "picture/Screenshot 2026-07-02 022737.png",
+      "picture/Screenshot 2026-07-02 022821.png",
+      "picture/Screenshot 2026-07-02 022850.png",
+      "picture/Screenshot 2026-07-02 022928.png",
+      "picture/Screenshot 2026-07-02 023013.png",
+      "picture/Screenshot 2026-07-02 023027.png"
+    ]
+  },
+
+  havenwear: {
+    title: "Cartinix — Admin Panel",
+    desc: "The full e-commerce admin dashboard for managing orders, inventory, and sales.",
+    images: [
+      "picture/Screenshot 2026-07-02 025951.png",
+      "picture/Screenshot 2026-07-02 030007.png",
+      "picture/Screenshot 2026-07-02 030438.png",
+      "picture/Screenshot 2026-07-02 030344.png",
+      "picture/Screenshot 2026-07-02 030504.png"
+    ]
+  },
+
+  relay: {
+    title: "Portfolio Website",
+    desc: "A clean, fast personal portfolio site built to make a strong first impression.",
+    images: [
+      "picture/Screenshot 2026-07-02 032331.png",
+      "picture/Screenshot 2026-07-02 032357.png",
+      "picture/Screenshot 2026-07-02 032424.png",
+      "picture/Screenshot 2026-07-02 032439.png",
+      "picture/Screenshot 2026-07-02 032509.png",
+      "picture/Screenshot 2026-07-02 032531.png",
+      "picture/Screenshot 2026-07-02 032607.png"
+    ]
+  }
+};
+
+let currentProject = null;
+let activeSlideIndex = 0;
+let previousFocus = null;
+
+// Open screenshot gallery
+function openShowcase(projectKey, displayUrl) {
+  const project = projectsData[projectKey];
+
+  if (!project) return;
+
+  currentProject = project;
+  activeSlideIndex = 0;
+  previousFocus = document.activeElement;
+
+  const track = document.getElementById("slide-track");
+  track.innerHTML = "";
+
+  project.images.forEach((imgUrl, index) => {
+    const slide = document.createElement("div");
+    slide.className = "slide";
+
+    if (index === 0) {
+      slide.classList.add("active");
     }
+
+    const browser = document.createElement("div");
+    browser.className = "browser-mockup";
+
+    const header = document.createElement("div");
+    header.className = "browser-header";
+
+    const dots = document.createElement("div");
+    dots.className = "browser-dots";
+    dots.innerHTML =
+      '<span class="r"></span>' +
+      '<span class="y"></span>' +
+      '<span class="g"></span>';
+
+    const urlBar = document.createElement("div");
+    urlBar.className = "browser-url-bar";
+    urlBar.textContent = displayUrl || "Project Preview";
+
+    header.appendChild(dots);
+    header.appendChild(urlBar);
+
+    const screen = document.createElement("div");
+    screen.className = "browser-screen";
+
+    const image = document.createElement("img");
+    image.src = imgUrl;
+    image.alt =
+      project.title + " — Screenshot " + (index + 1);
+    image.loading = index === 0 ? "eager" : "lazy";
+
+    screen.appendChild(image);
+
+    browser.appendChild(header);
+    browser.appendChild(screen);
+
+    slide.appendChild(browser);
+    track.appendChild(slide);
+  });
+
+  updateModalMeta();
+
+  const modal = document.getElementById("slideshow-modal");
+  modal.classList.add("active");
+  modal.setAttribute("aria-hidden", "false");
+  modal.focus();
+
+  document.body.style.overflow = "hidden";
+}
+
+// Close screenshot gallery
+function closeShowcase() {
+  const modal = document.getElementById("slideshow-modal");
+
+  modal.classList.remove("active");
+  modal.setAttribute("aria-hidden", "true");
+
+  document.body.style.overflow = "";
+
+  if (previousFocus && previousFocus.focus) {
+    previousFocus.focus();
+  }
+}
+
+// Previous / next slide
+function changeSlide(direction) {
+  if (!currentProject) return;
+
+  const slides = document.querySelectorAll(
+    "#slide-track .slide"
+  );
+
+  if (!slides.length) return;
+
+  slides[activeSlideIndex].classList.remove("active");
+
+  activeSlideIndex =
+    (activeSlideIndex + direction + slides.length) %
+    slides.length;
+
+  slides[activeSlideIndex].classList.add("active");
+
+  updateModalMeta();
+}
+
+// Update gallery information
+function updateModalMeta() {
+  if (!currentProject) return;
+
+  document.getElementById("modal-title").textContent =
+    currentProject.title;
+
+  document.getElementById("modal-desc").textContent =
+    currentProject.desc;
+
+  document.getElementById("modal-counter").textContent =
+    (activeSlideIndex + 1) +
+    " / " +
+    currentProject.images.length;
+}
+
+// Keyboard gallery controls
+document.addEventListener("keydown", event => {
+  const modal = document.getElementById("slideshow-modal");
+
+  if (!modal.classList.contains("active")) return;
+
+  if (event.key === "ArrowRight") {
+    changeSlide(1);
+  }
+
+  if (event.key === "ArrowLeft") {
+    changeSlide(-1);
+  }
+
+  if (event.key === "Escape") {
+    closeShowcase();
+  }
+
+  if (event.key === "Tab") {
+    const controls = Array.from(
+      modal.querySelectorAll("button")
+    );
+
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (
+      !event.shiftKey &&
+      document.activeElement === last
+    ) {
+      event.preventDefault();
+      first.focus();
+    } else if (!controls.includes(document.activeElement)) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+});
+
+// Mobile navigation
+const mobileMenuButton =
+  document.getElementById("mobileMenuButton");
+
+const mobileNav =
+  document.getElementById("mobileNav");
+
+function closeMobileMenu() {
+  mobileNav.classList.remove("open");
+  mobileMenuButton.setAttribute("aria-expanded", "false");
+  mobileMenuButton.textContent = "☰";
+}
+
+mobileMenuButton.addEventListener("click", () => {
+  const isOpen = mobileNav.classList.toggle("open");
+
+  mobileMenuButton.setAttribute(
+    "aria-expanded",
+    String(isOpen)
+  );
+
+  mobileMenuButton.textContent = isOpen ? "✕" : "☰";
+});
+
+mobileNav.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", closeMobileMenu);
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeMobileMenu();
+  }
+});
+
+// Flip project cards
+document.querySelectorAll(".flip-card").forEach(card => {
+  card.addEventListener("click", event => {
+    if (event.target.closest(".preview-btn")) return;
+
+    card.classList.toggle("flipped");
+  });
+
+  card.addEventListener("keydown", event => {
+    if (event.target.closest("button")) return;
+
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      card.classList.toggle("flipped");
+    }
+  });
+});
+
+// Typewriter UI simulation
+(function () {
+  const codeLines = [
+    { t: "kw", v: "function " },
+    { t: "fn", v: "ProductCard" },
+    { t: "plain", v: "({ " },
+    { t: "plain", v: "title, price" },
+    { t: "plain", v: " }) {\n  " },
+    { t: "kw", v: "return" },
+    { t: "plain", v: " (\n    " },
+    { t: "tag", v: "<div" },
+    { t: "plain", v: " className=" },
+    { t: "str", v: '"card"' },
+    { t: "tag", v: ">\n      " },
+    { t: "tag", v: "<h3>" },
+    { t: "plain", v: "{title}" },
+    { t: "tag", v: "</h3>\n      " },
+    { t: "tag", v: "<span>" },
+    { t: "plain", v: "${price}" },
+    { t: "tag", v: "</span>\n      " },
+    { t: "tag", v: "<button>" },
+    { t: "plain", v: "Add to cart" },
+    { t: "tag", v: "</button>\n    " },
+    { t: "tag", v: "</div>\n  " },
+    { t: "plain", v: ");\n}" }
+  ];
+
+  const codeBody = document.getElementById("codeBody");
+  const miniCard = document.getElementById("miniCard");
+  const renderBadge = document.getElementById("renderBadge");
+
+  if (!codeBody || !miniCard || !renderBadge) return;
+
+  const classes = {
+    kw: "tok-kw",
+    fn: "tok-fn",
+    str: "tok-str",
+    tag: "tok-tag",
+    plain: ""
   };
 
-  let currentProject = null;
-  let activeSlideIndex = 0;
+  let lineIndex = 0;
+  let characterIndex = 0;
 
-  function openShowcase(projectKey, displayUrl) {
-    currentProject = projectsData[projectKey];
-    activeSlideIndex = 0;
-    if (!currentProject) return;
+  const cursor = '<span class="code-cursor"></span>';
 
-    const track = document.getElementById('slide-track');
-    track.innerHTML = '';
-
-    currentProject.images.forEach((imgUrl, idx) => {
-      const slide = document.createElement('div');
-      slide.className = `slide ${idx === 0 ? 'active' : ''}`;
-      slide.innerHTML = `
-        <div class="browser-mockup">
-          <div class="browser-header">
-            <div class="browser-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
-            <div class="browser-url-bar">${displayUrl || 'https://localhost:3000'}</div>
-          </div>
-          <div class="browser-screen">
-            <img src="${imgUrl}" alt="Live Preview Frame">
-          </div>
-        </div>
-      `;
-      track.appendChild(slide);
-    });
-
-    updateModalMeta();
-    document.getElementById('slideshow-modal').classList.add('active');
-    document.body.style.overflow = 'hidden';
+  function escapeHtml(value) {
+    return value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
   }
 
-  function closeShowcase() {
-    document.getElementById('slideshow-modal').classList.remove('active');
-    document.body.style.overflow = '';
-  }
+  function typeStep() {
+    if (lineIndex >= codeLines.length) {
+      codeBody.innerHTML =
+        codeBody.innerHTML.replace(cursor, "");
 
-  function changeSlide(direction) {
-    if (!currentProject) return;
-    const slides = document.querySelectorAll('.slide');
-    if (slides.length === 0) return;
+      requestAnimationFrame(() => {
+        miniCard.classList.add("show");
+        renderBadge.classList.add("show");
+      });
 
-    slides[activeSlideIndex].classList.remove('active');
-    activeSlideIndex = (activeSlideIndex + direction + slides.length) % slides.length;
-    slides[activeSlideIndex].classList.add('active');
-
-    updateModalMeta();
-  }
-
-  function updateModalMeta() {
-    document.getElementById('modal-title').innerText = currentProject.title;
-    document.getElementById('modal-desc').innerText = currentProject.desc;
-    document.getElementById('modal-counter').innerText = `${activeSlideIndex + 1} / ${currentProject.images.length}`;
-  }
-
-  document.addEventListener('keydown', (e) => {
-    const modal = document.getElementById('slideshow-modal');
-    if (!modal.classList.contains('active')) return;
-    if (e.key === 'ArrowRight') changeSlide(1);
-    if (e.key === 'ArrowLeft') changeSlide(-1);
-    if (e.key === 'Escape') closeShowcase();
-  });
-
-  // Touch flip cards
-  document.querySelectorAll('.flip-card').forEach(card => {
-    card.addEventListener('click', function(e){
-      if (e.target.closest('.preview-btn')) return;
-      this.classList.toggle('flipped');
-    });
-  });
-
-  // Typewriter compiler simulation
-  (function(){
-    const codeLines = [
-      { t: 'kw', v: 'function ' }, { t: 'fn', v: 'ProductCard' }, { t: 'plain', v: '({ ' },
-      { t: 'plain', v: 'title, price' }, { t: 'plain', v: ' }) {\n  ' },
-      { t: 'kw', v: 'return' }, { t: 'plain', v: ' (\n    ' },
-      { t: 'tag', v: '<div' }, { t: 'plain', v: ' className=' }, { t: 'str', v: '"card"' }, { t: 'tag', v: '>\n      ' },
-      { t: 'tag', v: '<h3>' }, { t: 'plain', v: '{title}' }, { t: 'tag', v: '</h3>\n      ' },
-      { t: 'tag', v: '<span>' }, { t: 'plain', v: '${price}' }, { t: 'tag', v: '</span>\n      ' },
-      { t: 'tag', v: '<button>' }, { t: 'plain', v: 'Add to cart' }, { t: 'tag', v: '</button>\n    ' },
-      { t: 'tag', v: '</div>\n  ' }, { t: 'plain', v: ');\n}' }
-    ];
-
-    const codeBody = document.getElementById('codeBody');
-    const miniCard = document.getElementById('miniCard');
-    const renderBadge = document.getElementById('renderBadge');
-    if (!codeBody) return;
-
-    const cls = { kw:'tok-kw', fn:'tok-fn', str:'tok-str', tag:'tok-tag', plain:'' };
-    let li = 0, ci = 0;
-    const cursor = '<span class="code-cursor"></span>';
-
-    function typeStep(){
-      if (li >= codeLines.length){
-        codeBody.innerHTML = codeBody.innerHTML.replace(cursor, '');
-        requestAnimationFrame(() => {
-          miniCard.classList.add('show');
-          renderBadge.classList.add('show');
-        });
-        return;
-      }
-      const seg = codeLines[li];
-      ci += 2;
-      const shown = seg.v.slice(0, ci);
-      let html = '';
-      for (let k = 0; k < li; k++){ html += `<span class="${cls[codeLines[k].t]}">${escapeHtml(codeLines[k].v)}</span>`; }
-      html += `<span class="${cls[seg.t]}">${escapeHtml(shown)}</span>${cursor}`;
-      codeBody.innerHTML = html;
-
-      if (ci >= seg.v.length){ li++; ci = 0; }
-      setTimeout(typeStep, 16);
+      return;
     }
 
-    function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    const segment = codeLines[lineIndex];
 
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting){
-          setTimeout(typeStep, 300);
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
+    characterIndex += 2;
 
-    io.observe(document.querySelector('.demo-section'));
-  })();
+    const shown = segment.v.slice(0, characterIndex);
+
+    let html = "";
+
+    for (let i = 0; i < lineIndex; i++) {
+      const previous = codeLines[i];
+
+      html +=
+        '<span class="' +
+        classes[previous.t] +
+        '">' +
+        escapeHtml(previous.v) +
+        "</span>";
+    }
+
+    html +=
+      '<span class="' +
+      classes[segment.t] +
+      '">' +
+      escapeHtml(shown) +
+      "</span>" +
+      cursor;
+
+    codeBody.innerHTML = html;
+
+    if (characterIndex >= segment.v.length) {
+      lineIndex++;
+      characterIndex = 0;
+    }
+
+    setTimeout(typeStep, 16);
+  }
+
+  const demoSection =
+    document.querySelector(".demo-section");
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setTimeout(typeStep, 300);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(demoSection);
+  } else {
+    typeStep();
+  }
+})();
 </script>
+
 </body>
 </html>
